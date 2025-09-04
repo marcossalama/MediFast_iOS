@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-/// Minimal state machine scaffold for guided breathing.
+/// Guided breathing (Wim Hof style): breaths → retention hold → recovery hold, repeated for N rounds.
 @MainActor
 final class BreathingViewModel: ObservableObject {
     enum Phase { case breathing, retention, recovery, completed }
@@ -13,15 +13,20 @@ final class BreathingViewModel: ObservableObject {
     @Published private(set) var retentionElapsed: TimeInterval = 0
     @Published private(set) var recoveryRemaining: TimeInterval = 0
 
-    // Storage for potential later persistence, injected
+    // Results per round (retention durations)
+    @Published private(set) var results: [BreathingRoundResult] = []
+
+    // Storage for settings/history (local only)
     private let storage: StorageProtocol
 
     init(settings: BreathingSettings, storage: StorageProtocol = UserDefaultsStorage()) {
         self.settings = settings
         self.storage = storage
+        // Persist chosen settings for convenience
+        try? storage.save(settings, forKey: UDKeys.breathingSettings)
     }
 
-    // Display helpers for scaffold
+    // Display helpers
     var displayValue: String {
         switch phase {
         case .breathing: return "\(breathCount)"
@@ -30,29 +35,92 @@ final class BreathingViewModel: ObservableObject {
         case .completed: return "Done"
         }
     }
+
+    // MARK: - Timer tick (foreground only)
+    func tick(isActive: Bool) {
+        guard isActive else { return }
+        switch phase {
+        case .breathing:
+            // no auto timing; user taps to count breaths
+            break
+        case .retention:
+            retentionElapsed += 1
+        case .recovery:
+            if recoveryRemaining > 0 { recoveryRemaining -= 1 }
+            if recoveryRemaining <= 0 { advanceAfterRecovery() }
+        case .completed:
+            break
+        }
+    }
 }
 
-// MARK: - Intents (stubs for scaffold)
+// MARK: - Intents
 extension BreathingViewModel {
     func handleSingleTap() {
-        if phase == .breathing { breathCount += 1 }
+        guard phase == .breathing else { return }
+        breathCount += 1
+        if breathCount >= settings.breathsPerRound {
+            // soft hint via haptic; still requires double-tap to advance
+            Haptics.impact(.soft)
+        }
     }
 
     func handleDoubleTap() {
-        // Placeholder phase advance; full logic will come in implementation step
         switch phase {
-        case .breathing: phase = .retention
-        case .retention: phase = .recovery
+        case .breathing:
+            startRetention()
+        case .retention:
+            startRecovery()
         case .recovery:
-            if currentRound < settings.rounds {
-                currentRound += 1
-                breathCount = 0
-                phase = .breathing
-            } else {
-                phase = .completed
-            }
-        case .completed: break
+            advanceAfterRecovery()
+        case .completed:
+            break
         }
+    }
+
+    func finishEarly() {
+        phase = .completed
+        persistHistory()
+    }
+}
+
+// MARK: - Phase transitions
+private extension BreathingViewModel {
+    func startRetention() {
+        phase = .retention
+        retentionElapsed = 0
+        Haptics.impact(.medium)
+    }
+
+    func startRecovery() {
+        phase = .recovery
+        recoveryRemaining = TimeInterval(max(0, settings.recoveryHoldSeconds))
+        // Log the finished retention round
+        let result = BreathingRoundResult(id: UUID(), round: currentRound, breaths: breathCount, retentionSeconds: retentionElapsed)
+        results.append(result)
+        Haptics.impact(.light)
+    }
+
+    func advanceAfterRecovery() {
+        if currentRound < settings.rounds {
+            currentRound += 1
+            // Reset counters for next round
+            breathCount = 0
+            retentionElapsed = 0
+            recoveryRemaining = 0
+            phase = .breathing
+            Haptics.notify(.success)
+        } else {
+            phase = .completed
+            recoveryRemaining = 0
+            Haptics.notify(.success)
+            persistHistory()
+        }
+    }
+
+    func persistHistory() {
+        // Persist latest session results (overwrite). Keep lightweight.
+        try? storage.save(results, forKey: UDKeys.breathingHistory)
     }
 }
 
