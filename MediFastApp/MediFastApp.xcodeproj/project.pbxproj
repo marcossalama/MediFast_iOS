@@ -4,7 +4,32 @@
 	classes = {
 	};
 	objectVersion = 77;
-	objects = {
+objects = {
+
+/* Begin PBXBuildFile section */
+        AAB100012F00000000000001 /* MediFastAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100012F00000000000001 /* MediFastAppApp.swift */; };
+        AAB100022F00000000000001 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100022F00000000000001 /* RootTabView.swift */; };
+        AAB100032F00000000000001 /* MeditationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100032F00000000000001 /* MeditationView.swift */; };
+        AAB100042F00000000000001 /* MeditationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100042F00000000000001 /* MeditationViewModel.swift */; };
+        AAB100052F00000000000001 /* FocusModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100052F00000000000001 /* FocusModeView.swift */; };
+        AAB100062F00000000000001 /* FastingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100062F00000000000001 /* FastingView.swift */; };
+        AAB100072F00000000000001 /* FastHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100072F00000000000001 /* FastHistoryView.swift */; };
+        AAB100082F00000000000001 /* FastingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100082F00000000000001 /* FastingViewModel.swift */; };
+        AAB100092F00000000000001 /* MeditationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100092F00000000000001 /* MeditationSettings.swift */; };
+        AAB1000A2F00000000000001 /* MeditationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000A2F00000000000001 /* MeditationSession.swift */; };
+        AAB1000B2F00000000000001 /* StreaksState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000B2F00000000000001 /* StreaksState.swift */; };
+        AAB1000C2F00000000000001 /* Fast.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000C2F00000000000001 /* Fast.swift */; };
+        AAB1000D2F00000000000001 /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000D2F00000000000001 /* StorageProtocol.swift */; };
+        AAB1000E2F00000000000001 /* UDKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000E2F00000000000001 /* UDKeys.swift */; };
+        AAB1000F2F00000000000001 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */; };
+        AAB100102F00000000000001 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100102F00000000000001 /* Haptics.swift */; };
+        AAB100112F00000000000001 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100112F00000000000001 /* AudioPlayer.swift */; };
+        AAB100122F00000000000001 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100122F00000000000001 /* TimeFormatter.swift */; };
+        AAB100132F00000000000001 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100132F00000000000001 /* Sounds.swift */; };
+        AAB100142F00000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAF100142F00000000000001 /* Assets.xcassets */; };
+        AAB100202F00000000000001 /* MediFastAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100202F00000000000001 /* MediFastAppTests.swift */; };
+        AAB100212F00000000000001 /* TimeMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100212F00000000000001 /* TimeMathTests.swift */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		32F42D8E2E64C8240037024A /* PBXContainerItemProxy */ = {
@@ -74,16 +99,18 @@
 /* Begin PBXGroup section */
 		32F42D762E64C8230037024A = {
 			isa = PBXGroup;
-			children = (
-				32F42D812E64C8230037024A /* MediFastApp */,
-				32F42D902E64C8240037024A /* MediFastAppTests */,
-				32F42D9A2E64C8240037024A /* MediFastAppUITests */,
-				32F42D802E64C8230037024A /* Products */,
-			);
+				children = (
+					32F42D812E64C8230037024A /* MediFastApp */,
+					32F42D902E64C8240037024A /* MediFastAppTests */,
+					32F42D9A2E64C8240037024A /* MediFastAppUITests */,
+					AAG100012F00000000000001 /* AppClassic */,
+					AAG100022F00000000000001 /* TestsClassic */,
+					32F42D802E64C8230037024A /* Products */,
+				);
 			sourceTree = "<group>";
 		};
-		32F42D802E64C8230037024A /* Products */ = {
-			isa = PBXGroup;
+			32F42D802E64C8230037024A /* Products */ = {
+				isa = PBXGroup;
 			children = (
 				32F42D7F2E64C8230037024A /* MediFastApp.app */,
 				32F42D8D2E64C8240037024A /* MediFastAppTests.xctest */,
@@ -186,6 +213,44 @@
 					};
 				};
 			};
+			AAG100012F00000000000001 /* AppClassic */ = {
+				isa = PBXGroup;
+				children = (
+					AAF100142F00000000000001 /* Assets.xcassets */,
+					AAF100012F00000000000001 /* MediFastAppApp.swift */,
+					AAF100022F00000000000001 /* RootTabView.swift */,
+					AAF100032F00000000000001 /* MeditationView.swift */,
+					AAF100042F00000000000001 /* MeditationViewModel.swift */,
+					AAF100052F00000000000001 /* FocusModeView.swift */,
+					AAF100062F00000000000001 /* FastingView.swift */,
+					AAF100072F00000000000001 /* FastHistoryView.swift */,
+					AAF100082F00000000000001 /* FastingViewModel.swift */,
+					AAF100092F00000000000001 /* MeditationSettings.swift */,
+					AAF1000A2F00000000000001 /* MeditationSession.swift */,
+					AAF1000B2F00000000000001 /* StreaksState.swift */,
+					AAF1000C2F00000000000001 /* Fast.swift */,
+					AAF1000D2F00000000000001 /* StorageProtocol.swift */,
+					AAF1000E2F00000000000001 /* UDKeys.swift */,
+					AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */,
+					AAF100102F00000000000001 /* Haptics.swift */,
+					AAF100112F00000000000001 /* AudioPlayer.swift */,
+					AAF100122F00000000000001 /* TimeFormatter.swift */,
+					AAF100132F00000000000001 /* Sounds.swift */,
+				);
+				name = AppClassic;
+				path = MediFastApp;
+				sourceTree = "<group>";
+			};
+			AAG100022F00000000000001 /* TestsClassic */ = {
+				isa = PBXGroup;
+				children = (
+					AAF100202F00000000000001 /* MediFastAppTests.swift */,
+					AAF100212F00000000000001 /* TimeMathTests.swift */,
+				);
+				name = TestsClassic;
+				path = MediFastAppTests;
+				sourceTree = "<group>";
+			};
 			buildConfigurationList = 32F42D7A2E64C8230037024A /* Build configuration list for PBXProject "MediFastApp" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -212,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAB100142F00000000000001 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +302,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAB100012F00000000000001 /* MediFastAppApp.swift in Sources */,
+				AAB100022F00000000000001 /* RootTabView.swift in Sources */,
+				AAB100032F00000000000001 /* MeditationView.swift in Sources */,
+				AAB100042F00000000000001 /* MeditationViewModel.swift in Sources */,
+				AAB100052F00000000000001 /* FocusModeView.swift in Sources */,
+				AAB100062F00000000000001 /* FastingView.swift in Sources */,
+				AAB100072F00000000000001 /* FastHistoryView.swift in Sources */,
+				AAB100082F00000000000001 /* FastingViewModel.swift in Sources */,
+				AAB100092F00000000000001 /* MeditationSettings.swift in Sources */,
+				AAB1000A2F00000000000001 /* MeditationSession.swift in Sources */,
+				AAB1000B2F00000000000001 /* StreaksState.swift in Sources */,
+				AAB1000C2F00000000000001 /* Fast.swift in Sources */,
+				AAB1000D2F00000000000001 /* StorageProtocol.swift in Sources */,
+				AAB1000E2F00000000000001 /* UDKeys.swift in Sources */,
+				AAB1000F2F00000000000001 /* UserDefaultsStorage.swift in Sources */,
+				AAB100102F00000000000001 /* Haptics.swift in Sources */,
+				AAB100112F00000000000001 /* AudioPlayer.swift in Sources */,
+				AAB100122F00000000000001 /* TimeFormatter.swift in Sources */,
+				AAB100132F00000000000001 /* Sounds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +328,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAB100202F00000000000001 /* MediFastAppTests.swift in Sources */,
+				AAB100212F00000000000001 /* TimeMathTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
