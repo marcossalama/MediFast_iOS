@@ -1,0 +1,44 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+
+# Swift Package Manager
+.build/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# iOS specific
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# User settings
+**/*.xcuserdatad/
+**/*.xcscmblueprint
+
+# SwiftPM workspace data
+.swiftpm/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Xcode scheme management
+**/xcschemes/**/xcschememanagement.plist
