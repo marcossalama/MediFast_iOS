@@ -10,5 +10,8 @@ enum UDKeys {
     // Fasting
     static let fastingActive = "fasting.active.v1"  // Optional active fast
     static let fastingHistory = "fasting.history.v1" // [Fast]
-}
 
+    // Breathing
+    static let breathingSettings = "breathing.settings.v1" // BreathingSettings
+    static let breathingHistory = "breathing.history.v1"  // [BreathingRoundResult] (optional)
+}

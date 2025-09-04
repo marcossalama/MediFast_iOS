@@ -12,6 +12,14 @@ struct RootTabView: View {
                 }
 
             NavigationStack {
+                BreathingSetupView()
+            }
+                .tabItem {
+                    Image(systemName: "wind")
+                    Text("Breathe")
+                }
+
+            NavigationStack {
                 FastingView()
             }
                 .tabItem {
