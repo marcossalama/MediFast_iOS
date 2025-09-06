@@ -68,5 +68,5 @@ struct BreathingSessionView: View {
 
 #Preview {
     let vm = BreathingViewModel(settings: .init(rounds: 5, breathsPerRound: 30, recoveryHoldSeconds: 15))
-    return NavigationStack { BreathingSessionView().environmentObject(vm) }
+    NavigationStack { BreathingSessionView().environmentObject(vm) }
 }

@@ -72,6 +72,5 @@ struct BreathingResultsView: View {
 #Preview {
     let vm = BreathingViewModel(settings: .init(rounds: 3, breathsPerRound: 30, recoveryHoldSeconds: 15))
     vm.handleSingleTap(); vm.handleSingleTap();
-    return NavigationStack { BreathingResultsView().environmentObject(vm) }
+    NavigationStack { BreathingResultsView().environmentObject(vm) }
 }
-
