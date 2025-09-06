@@ -28,9 +28,19 @@ struct BreathingSessionView: View {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .fill(Color.gray.opacity(0.1))
                         .frame(width: 240, height: 240)
+                        .scaleEffect(viewModel.phase == .breathing ? (viewModel.breathPhase == .inhale ? 1.04 : 0.98) : 1.0)
+                        .animation(.easeInOut(duration: 0.9), value: viewModel.breathPhase)
                     Text(viewModel.displayValue)
                         .font(.system(size: 56, weight: .medium, design: .rounded))
                         .monospacedDigit()
+                }
+
+                if viewModel.phase == .breathing {
+                    Text(viewModel.breathPhase == .inhale ? "Inhale" : "Exhale")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .transition(.opacity)
+                        .id(viewModel.breathPhase == .inhale ? "inhale" : "exhale")
                 }
 
                 Text(instruction)
@@ -67,7 +77,7 @@ struct BreathingSessionView: View {
 
     private var instruction: String {
         switch viewModel.phase {
-        case .breathing: return "Auto‑pace every \(viewModel.settings.paceSeconds)s. Double‑tap to hold."
+        case .breathing: return "Prompts follow pace (\(viewModel.settings.paceSeconds)s). Double‑tap to hold."
         case .retention: return "Double‑tap for recovery breath."
         case .recovery: return "Auto‑advance after countdown. Double‑tap to skip."
         case .completed: return "Session completed."

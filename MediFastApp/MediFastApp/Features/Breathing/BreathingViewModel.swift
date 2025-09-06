@@ -5,6 +5,7 @@ import SwiftUI
 @MainActor
 final class BreathingViewModel: ObservableObject {
     enum Phase { case breathing, retention, recovery, completed }
+    enum BreathPhase { case inhale, exhale }
 
     @Published private(set) var settings: BreathingSettings
     @Published private(set) var currentRound: Int = 1
@@ -37,6 +38,21 @@ final class BreathingViewModel: ObservableObject {
         case .recovery: return TimeFormatter.ms(recoveryRemaining)
         case .completed: return "Done"
         }
+    }
+
+    /// Current sub-phase of a single breath during auto-pace.
+    var breathPhase: BreathPhase {
+        guard phase == .breathing else { return .exhale }
+        let p = max(1, settings.paceSeconds)
+        // First half (rounded up) = inhale, second half = exhale
+        let pivot = (p + 1) / 2
+        return breathTickCounter < pivot ? .inhale : .exhale
+    }
+
+    /// 0...1 progress within the current breath window.
+    var breathProgress: Double {
+        let p = max(1, settings.paceSeconds)
+        return min(1, Double(breathTickCounter) / Double(p))
     }
 
     // MARK: - Timer tick (foreground only)
