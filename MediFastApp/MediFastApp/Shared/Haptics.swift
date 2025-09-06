@@ -23,6 +23,19 @@ enum Haptics {
 
     enum ImpactStyle { case light, medium, heavy, soft, rigid }
     enum NotificationType { case success, warning, error }
+
+    /// Repeated impact pulses over a duration to approximate a longer vibration.
+    static func pulse(duration: TimeInterval = 2.0, interval: TimeInterval = 0.25, style: ImpactStyle = .medium) {
+        guard duration > 0, interval > 0 else { return }
+        let count = max(1, Int(ceil(duration / interval)))
+        func fire(_ i: Int) {
+            impact(style)
+            if i + 1 < count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + interval) { fire(i + 1) }
+            }
+        }
+        fire(0)
+    }
 }
 
 #if canImport(UIKit)

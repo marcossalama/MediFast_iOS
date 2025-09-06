@@ -137,6 +137,8 @@ final class MeditationViewModel: ObservableObject {
 
         let next = currentIndex + 1
         if next < totalSessions {
+            // 2s vibration between sessions
+            Haptics.pulse(duration: 2.0, interval: 0.25, style: .rigid)
             beginSession(index: next, playStartBell: false)
         } else {
             state = .completed

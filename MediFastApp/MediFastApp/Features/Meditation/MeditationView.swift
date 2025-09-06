@@ -10,14 +10,18 @@ struct MeditationView: View {
     var body: some View {
         Form {
             Section("Sessions") {
-                ForEach(sessions.indices, id: \.self) { idx in
+                ForEach(Array(sessions.enumerated()), id: \.offset) { item in
+                    let idx = item.offset
                     Stepper(value: Binding(get: { sessions[idx] }, set: { sessions[idx] = min(59, max(1, $0)) }), in: 1...59) {
                         Text("Session \(idx + 1): \(sessions[idx]) min")
                     }
                 }
                 HStack {
                     Button {
-                        if sessions.count < 9 { sessions.append(sessions.last ?? 10) }
+                        if sessions.count < 9 {
+                            let next = min(59, max(1, sessions.last ?? 10))
+                            sessions.append(next)
+                        }
                     } label: { Label("Add Session", systemImage: "plus") }
                     .disabled(sessions.count >= 9)
                     Spacer()
