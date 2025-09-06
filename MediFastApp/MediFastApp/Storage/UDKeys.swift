@@ -6,6 +6,7 @@ enum UDKeys {
     static let meditationSettings = "meditation.settings.v1"
     static let meditationSessions = "meditation.sessions.v1" // [MeditationSession]
     static let meditationStreaks = "meditation.streaks.v1"   // StreaksState
+    static let meditationPlan = "meditation.plan.v1"         // MeditationPlan
 
     // Fasting
     static let fastingActive = "fasting.active.v1"  // Optional active fast

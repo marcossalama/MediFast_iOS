@@ -30,11 +30,19 @@ final class MeditationViewModel: ObservableObject {
 
     init(storage: StorageProtocol = UserDefaultsStorage()) {
         self.storage = storage
-        // Attempt to load saved settings as defaults
-        if let saved: MeditationSettings = try? storage.load(MeditationSettings.self, forKey: UDKeys.meditationSettings) {
-            self.selectedMinutes = saved.presetMinutes
-            self.midpointInterval = saved.midpointInterval
-            self.warmupSeconds = saved.warmupSeconds
+        // Prefer new MeditationPlan; migrate from old settings if needed
+        if let plan: MeditationPlan = try? storage.load(MeditationPlan.self, forKey: UDKeys.meditationPlan),
+           let first = plan.sessionsMinutes.first {
+            self.selectedMinutes = first
+            self.warmupSeconds = plan.warmupSeconds
+            self.midpointInterval = nil // midpoints removed from new design
+        } else if let legacy: MeditationSettings = try? storage.load(MeditationSettings.self, forKey: UDKeys.meditationSettings) {
+            // Migrate legacy single-session settings into a plan and persist
+            let plan = MeditationPlan(sessionsMinutes: [legacy.presetMinutes], warmupSeconds: legacy.warmupSeconds)
+            try? storage.save(plan, forKey: UDKeys.meditationPlan)
+            self.selectedMinutes = legacy.presetMinutes
+            self.warmupSeconds = legacy.warmupSeconds
+            self.midpointInterval = nil // ignore legacy midpoint going forward
         }
     }
 
@@ -43,9 +51,9 @@ final class MeditationViewModel: ObservableObject {
         selectedMinutes = minutes
         self.warmupSeconds = warmupSeconds
         self.midpointInterval = midpointInterval
-        // Persist settings for next launch
-        let settings = MeditationSettings(presetMinutes: minutes, midpointInterval: midpointInterval, warmupSeconds: warmupSeconds)
-        try? storage.save(settings, forKey: UDKeys.meditationSettings)
+        // Persist new plan format for next launch (single session for now)
+        let plan = MeditationPlan(sessionsMinutes: [minutes], warmupSeconds: warmupSeconds)
+        try? storage.save(plan, forKey: UDKeys.meditationPlan)
 
         state = (warmupSeconds ?? 0) > 0 ? .warmup : .running
         startAt = Date()
