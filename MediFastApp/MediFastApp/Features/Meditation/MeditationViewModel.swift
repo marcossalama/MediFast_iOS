@@ -1,29 +1,48 @@
 import Foundation
 import SwiftUI
 
-/// ViewModel for the Meditation feature: foreground-only ticking, midpoint/end triggers, local persistence.
+/// ViewModel for the Meditation feature: foreground-only ticking, multi-session chaining, local persistence.
 @MainActor
 final class MeditationViewModel: ObservableObject {
     enum State { case idle, warmup, running, pausedDueToBackground, completed }
 
-    // MARK: - Inputs / Settings
+    // Legacy UI support: a single-minute value used only as a fallback default
     @Published var selectedMinutes: Int = 10
-    @Published var midpointInterval: Int? = nil // minutes (every N minutes)
-    @Published var warmupSeconds: Int? = nil    // optional warm-up
 
-    // MARK: - Runtime State
+    // Plan (persisted)
+    @Published private(set) var plan: MeditationPlan = MeditationPlan(sessionsMinutes: [10], warmupSeconds: nil)
+
+    // Runtime state
     @Published private(set) var state: State = .idle
-    @Published private(set) var startAt: Date? = nil
-    @Published private(set) var elapsed: TimeInterval = 0 // total elapsed including warmup
+    @Published private(set) var currentIndex: Int = 0 // 0-based
+    @Published private(set) var startAt: Date? = nil  // per-session
+    @Published private(set) var elapsedInCurrent: TimeInterval = 0 // warmup or session seconds
 
-    // Track which midpoint marks have fired (minute offsets from main session start)
-    private(set) var firedMidpoints: Set<Int> = []
-
-    // Derived
-    var totalDuration: TimeInterval { TimeInterval(max(0, selectedMinutes)) * 60 + TimeInterval(warmupSeconds ?? 0) }
-    var mainDuration: TimeInterval { TimeInterval(max(0, selectedMinutes)) * 60 }
+    // Derived helpers
+    var warmupSeconds: Int? { plan.warmupSeconds }
+    var totalSessions: Int { max(1, plan.sessionsMinutes.count) }
+    var currentSessionNumber: Int { min(currentIndex + 1, totalSessions) }
+    var sessionMinutes: Int { plan.sessionsMinutes.indices.contains(currentIndex) ? plan.sessionsMinutes[currentIndex] : (plan.sessionsMinutes.last ?? 10) }
+    var sessionDuration: TimeInterval { TimeInterval(max(1, sessionMinutes)) * 60 }
     var warmupDuration: TimeInterval { TimeInterval(warmupSeconds ?? 0) }
-    var progress: Double { totalDuration > 0 ? min(1.0, elapsed / totalDuration) : 0 }
+    var progress: Double {
+        switch state {
+        case .warmup:
+            guard warmupDuration > 0 else { return 0 }
+            return min(1, elapsedInCurrent / warmupDuration)
+        case .running:
+            return min(1, elapsedInCurrent / sessionDuration)
+        default:
+            return 0
+        }
+    }
+    var remainingSeconds: Int {
+        switch state {
+        case .warmup: return max(0, Int(warmupDuration - elapsedInCurrent))
+        case .running: return max(0, Int(sessionDuration - elapsedInCurrent))
+        default: return 0
+        }
+    }
 
     // Storage (injected)
     private let storage: StorageProtocol
@@ -31,41 +50,42 @@ final class MeditationViewModel: ObservableObject {
     init(storage: StorageProtocol = UserDefaultsStorage()) {
         self.storage = storage
         // Prefer new MeditationPlan; migrate from old settings if needed
-        if let plan: MeditationPlan = try? storage.load(MeditationPlan.self, forKey: UDKeys.meditationPlan),
-           let first = plan.sessionsMinutes.first {
-            self.selectedMinutes = first
-            self.warmupSeconds = plan.warmupSeconds
-            self.midpointInterval = nil // midpoints removed from new design
+        if let plan: MeditationPlan = try? storage.load(MeditationPlan.self, forKey: UDKeys.meditationPlan) {
+            self.plan = plan
+            self.selectedMinutes = plan.sessionsMinutes.first ?? 10
         } else if let legacy: MeditationSettings = try? storage.load(MeditationSettings.self, forKey: UDKeys.meditationSettings) {
-            // Migrate legacy single-session settings into a plan and persist
             let plan = MeditationPlan(sessionsMinutes: [legacy.presetMinutes], warmupSeconds: legacy.warmupSeconds)
-            try? storage.save(plan, forKey: UDKeys.meditationPlan)
+            self.plan = plan
             self.selectedMinutes = legacy.presetMinutes
-            self.warmupSeconds = legacy.warmupSeconds
-            self.midpointInterval = nil // ignore legacy midpoint going forward
+            try? storage.save(plan, forKey: UDKeys.meditationPlan)
         }
     }
 
     // MARK: - Intents
     func start(minutes: Int, warmupSeconds: Int?, midpointInterval: Int?) {
-        selectedMinutes = minutes
-        self.warmupSeconds = warmupSeconds
-        self.midpointInterval = midpointInterval
-        // Persist new plan format for next launch (single session for now)
+        // Backwards-compat entrypoint: create a one-session plan
         let plan = MeditationPlan(sessionsMinutes: [minutes], warmupSeconds: warmupSeconds)
         try? storage.save(plan, forKey: UDKeys.meditationPlan)
+        startPlan(plan)
+    }
 
-        state = (warmupSeconds ?? 0) > 0 ? .warmup : .running
-        startAt = Date()
-        elapsed = 0
-        firedMidpoints.removeAll()
+    func startPlan(_ plan: MeditationPlan) {
+        self.plan = plan
+        try? storage.save(plan, forKey: UDKeys.meditationPlan)
+        currentIndex = 0
+        elapsedInCurrent = 0
+        if let w = plan.warmupSeconds, w > 0 {
+            state = .warmup
+            startAt = nil
+        } else {
+            beginSession(index: 0, playStartBell: true)
+        }
     }
 
     func cancel() {
         state = .idle
         startAt = nil
-        elapsed = 0
-        firedMidpoints.removeAll()
+        elapsedInCurrent = 0
     }
 
     /// Advance the timer by one tick when app is active. No background accumulation.
@@ -74,54 +94,60 @@ final class MeditationViewModel: ObservableObject {
             if state == .running || state == .warmup { state = .pausedDueToBackground }
             return
         }
-        if state == .pausedDueToBackground { state = warmupRemaining > 0 ? .warmup : .running }
-        guard state == .warmup || state == .running else { return }
-
-        elapsed += 1
-
-        // Handle warmup completion transition
-        if state == .warmup && warmupRemaining <= 0 {
-            state = .running
-            // Start bell at main session start
-            Haptics.impact(.light)
-            AudioPlayer.shared.play(named: Sounds.bellStart)
-        }
-
-        // Midpoint bells during running
-        if state == .running, let intervalMin = midpointInterval, intervalMin > 0 {
-            let mainElapsed = max(0, Int(elapsed - warmupDuration))
-            let mark = (mainElapsed / 60)
-            if mark > 0, mark % intervalMin == 0, !firedMidpoints.contains(mark) {
-                firedMidpoints.insert(mark)
-                Haptics.impact(.soft)
-                AudioPlayer.shared.play(named: Sounds.bellMid)
+        if state == .pausedDueToBackground {
+            if startAt == nil && warmupDuration > 0 && remainingSeconds > 0 {
+                state = .warmup
+            } else {
+                state = .running
             }
         }
+        guard state == .warmup || state == .running else { return }
 
-        // Completion
-        if elapsed >= totalDuration {
-            finishSession()
+        elapsedInCurrent += 1
+
+        if state == .warmup {
+            if remainingSeconds <= 0 { beginSession(index: 0, playStartBell: true) }
+            return
+        }
+
+        if elapsedInCurrent >= sessionDuration {
+            endCurrentSessionAndAdvance()
         }
     }
 
-    private var warmupRemaining: Int { max(0, Int(warmupDuration - elapsed)) }
+    private func beginSession(index: Int, playStartBell: Bool) {
+        currentIndex = index
+        elapsedInCurrent = 0
+        state = .running
+        startAt = Date()
+        if playStartBell {
+            Haptics.impact(.light)
+            AudioPlayer.shared.play(named: Sounds.bellStart)
+        }
+    }
 
-    private func finishSession() {
-        state = .completed
+    private func endCurrentSessionAndAdvance() {
         let end = Date()
         let start = startAt ?? end
-        let session = MeditationSession(id: UUID(), startAt: start, endAt: end, duration: mainDuration)
+        let duration = sessionDuration
+        let session = MeditationSession(id: UUID(), startAt: start, endAt: end, duration: duration)
         persist(session: session)
         updateStreaks(for: end)
         Haptics.notify(.success)
-        AudioPlayer.shared.play(named: Sounds.bellEnd)
+
+        let next = currentIndex + 1
+        if next < totalSessions {
+            beginSession(index: next, playStartBell: false)
+        } else {
+            state = .completed
+            AudioPlayer.shared.play(named: Sounds.bellEnd)
+        }
     }
 
     // MARK: - Persistence
     private func persist(session: MeditationSession) {
         var sessions: [MeditationSession] = (try? storage.load([MeditationSession].self, forKey: UDKeys.meditationSessions)) ?? []
         sessions.append(session)
-        // Keep most recent 500 to avoid bloat
         if sessions.count > 500 { sessions.removeFirst(sessions.count - 500) }
         try? storage.save(sessions, forKey: UDKeys.meditationSessions)
     }

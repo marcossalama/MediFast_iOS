@@ -12,6 +12,12 @@ struct FocusModeView: View {
             ZStack {
                 Color.black.ignoresSafeArea()
                 VStack(spacing: 24) {
+                    // Session indicator
+                    if viewModel.state == .running || viewModel.state == .warmup {
+                        Text("Session \(viewModel.currentSessionNumber)/\(viewModel.totalSessions)")
+                            .font(.headline)
+                            .foregroundStyle(.white.opacity(0.9))
+                    }
                     // Progress
                     ProgressView(value: viewModel.progress)
                         .progressViewStyle(.linear)
@@ -41,17 +47,7 @@ struct FocusModeView: View {
                     viewModel.tick(isActive: false)
                 }
             }
-            .onAppear {
-                setIdleDisabled(true)
-                if !hasPlayedStart {
-                    // Play start bell/haptic upon entering focus mode (if immediate running)
-                    if viewModel.warmupSeconds == nil || viewModel.warmupSeconds == 0 {
-                        Haptics.impact(.light)
-                        AudioPlayer.shared.play(named: Sounds.bellStart)
-                    }
-                    hasPlayedStart = true
-                }
-            }
+            .onAppear { setIdleDisabled(true) }
             .onDisappear { setIdleDisabled(false) }
             .task(id: context.date) {
                 viewModel.tick(isActive: scenePhase == .active)
@@ -67,7 +63,7 @@ struct FocusModeView: View {
     }
 
     private var timeDisplay: String {
-        let remaining = max(0, Int(viewModel.totalDuration - viewModel.elapsed))
+        let remaining = max(0, viewModel.remainingSeconds)
         let hrs = remaining / 3600
         let mins = (remaining % 3600) / 60
         let secs = remaining % 60

@@ -38,7 +38,7 @@ struct MeditationView: View {
                 Button {
                     let plan = MeditationPlan(sessionsMinutes: sessions, warmupSeconds: warmup == 0 ? nil : warmup)
                     try? storage.save(plan, forKey: UDKeys.meditationPlan)
-                    viewModel.start(minutes: sessions.first ?? 10, warmupSeconds: warmup == 0 ? nil : warmup, midpointInterval: nil)
+                    viewModel.startPlan(plan)
                     goFocus = true
                 } label: {
                     Label("Start", systemImage: "play.circle.fill").font(.title3)
