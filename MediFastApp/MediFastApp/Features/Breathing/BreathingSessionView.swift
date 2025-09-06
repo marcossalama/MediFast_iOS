@@ -6,6 +6,8 @@ struct BreathingSessionView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var viewModel: BreathingViewModel
 
+    @State private var showResults = false
+
     var body: some View {
         TimelineView(.periodic(from: .now, by: 1)) { context in
             VStack(spacing: 24) {
@@ -13,10 +15,7 @@ struct BreathingSessionView: View {
                     Text("Round \(viewModel.currentRound)/\(viewModel.settings.rounds)")
                         .font(.headline)
                     Spacer()
-                    Button("Finish") {
-                        viewModel.finishEarly()
-                        dismiss()
-                    }
+                    Button("Finish") { viewModel.finishEarly(); showResults = true }
                     .buttonStyle(.bordered)
                 }
                 .padding(.horizontal)
@@ -47,6 +46,13 @@ struct BreathingSessionView: View {
             .task(id: context.date) {
                 viewModel.tick(isActive: scenePhase == .active)
             }
+            .onChange(of: viewModel.phase) { _, newPhase in
+                if newPhase == .completed { showResults = true }
+            }
+        }
+        .navigationDestination(isPresented: $showResults) {
+            BreathingResultsView()
+                .environmentObject(viewModel)
         }
     }
 

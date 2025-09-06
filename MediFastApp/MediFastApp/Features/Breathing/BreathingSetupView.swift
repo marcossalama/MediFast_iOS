@@ -7,6 +7,7 @@ struct BreathingSetupView: View {
     @State private var recoveryHoldSeconds: Int = 15
     @State private var goSession = false
     @State private var viewModel: BreathingViewModel? = nil
+    private let storage: StorageProtocol = UserDefaultsStorage()
 
     var body: some View {
         Form {
@@ -51,10 +52,17 @@ struct BreathingSetupView: View {
                     .environmentObject(vm)
             }
         }
+        .onAppear {
+            // Load last-used settings if available
+            if let saved: BreathingSettings = try? storage.load(BreathingSettings.self, forKey: UDKeys.breathingSettings) {
+                rounds = saved.rounds
+                breathsPerRound = saved.breathsPerRound
+                recoveryHoldSeconds = saved.recoveryHoldSeconds
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack { BreathingSetupView() }
 }
-
