@@ -67,21 +67,6 @@ objects = {
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		32F42D812E64C8230037024A /* MediFastApp */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MediFastApp;
-			sourceTree = "<group>";
-		};
-		32F42D902E64C8240037024A /* MediFastAppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MediFastAppTests;
-			sourceTree = "<group>";
-		};
-		32F42D9A2E64C8240037024A /* MediFastAppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MediFastAppUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,14 +96,11 @@ objects = {
 /* Begin PBXGroup section */
 		32F42D762E64C8230037024A = {
 			isa = PBXGroup;
-				children = (
-					32F42D812E64C8230037024A /* MediFastApp */,
-					32F42D902E64C8240037024A /* MediFastAppTests */,
-					32F42D9A2E64C8240037024A /* MediFastAppUITests */,
-					AAG100012F00000000000001 /* AppClassic */,
-					AAG100022F00000000000001 /* TestsClassic */,
-					32F42D802E64C8230037024A /* Products */,
-				);
+					children = (
+						AAG100012F00000000000001 /* AppClassic */,
+						AAG100022F00000000000001 /* TestsClassic */,
+						32F42D802E64C8230037024A /* Products */,
+					);
 			sourceTree = "<group>";
 		};
 			32F42D802E64C8230037024A /* Products */ = {
