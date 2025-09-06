@@ -35,6 +35,7 @@ objects = {
         AAB100262F00000000000001 /* BreathingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100262F00000000000001 /* BreathingSettings.swift */; };
         AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100272F00000000000001 /* BreathingRoundResult.swift */; };
         AAB100282F00000000000001 /* BreathingResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100282F00000000000001 /* BreathingResultsView.swift */; };
+        AAB100292F00000000000001 /* MeditationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100292F00000000000001 /* MeditationPlan.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@ objects = {
         AAF100262F00000000000001 /* BreathingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSettings.swift; path = MediFastApp/Models/BreathingSettings.swift; sourceTree = SOURCE_ROOT; };
         AAF100272F00000000000001 /* BreathingRoundResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingRoundResult.swift; path = MediFastApp/Models/BreathingRoundResult.swift; sourceTree = SOURCE_ROOT; };
         AAF100282F00000000000001 /* BreathingResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingResultsView.swift; path = MediFastApp/Features/Breathing/BreathingResultsView.swift; sourceTree = SOURCE_ROOT; };
+        AAF100292F00000000000001 /* MeditationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationPlan.swift; path = MediFastApp/Models/MeditationPlan.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -250,9 +252,10 @@ objects = {
                     AAF100242F00000000000001 /* BreathingSessionView.swift */,
                     AAF100282F00000000000001 /* BreathingResultsView.swift */,
                     AAF100252F00000000000001 /* BreathingViewModel.swift */,
-                    AAF100262F00000000000001 /* BreathingSettings.swift */,
-                    AAF100272F00000000000001 /* BreathingRoundResult.swift */,
-                );
+                AAF100262F00000000000001 /* BreathingSettings.swift */,
+                AAF100272F00000000000001 /* BreathingRoundResult.swift */,
+                AAF100292F00000000000001 /* MeditationPlan.swift */,
+            );
 				name = AppClassic;
 				path = MediFastApp/MediFastApp;
 				sourceTree = "<group>";
@@ -343,6 +346,7 @@ objects = {
                 AAB100252F00000000000001 /* BreathingViewModel.swift in Sources */,
                 AAB100262F00000000000001 /* BreathingSettings.swift in Sources */,
                 AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */,
+                AAB100292F00000000000001 /* MeditationPlan.swift in Sources */,
             );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
