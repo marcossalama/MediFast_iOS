@@ -127,6 +127,8 @@ private extension BreathingViewModel {
         results.append(result)
         breathTickCounter = 0
         Haptics.impact(.light)
+        // Gentle bell as we exit retention into recovery
+        AudioPlayer.shared.play(named: Sounds.bellMid)
     }
 
     func advanceAfterRecovery() {
@@ -145,6 +147,8 @@ private extension BreathingViewModel {
             breathTickCounter = 0
             Haptics.notify(.success)
             persistHistory()
+            // Final bell at the end of the full session
+            AudioPlayer.shared.play(named: Sounds.bellEnd)
         }
     }
 
