@@ -21,32 +21,46 @@ struct BreathingResultsView: View {
             Text("Session Summary")
                 .font(.title2)
 
-            if viewModel.results.isEmpty {
-                ContentUnavailableView("No data", systemImage: "wind", description: Text("No rounds recorded."))
-            } else {
-                // Stats
-                VStack(spacing: 8) {
-                    statRow("Best", value: best)
-                    statRow("Average", value: average)
-                    statRow("Total", value: total)
-                }
-                .padding()
-                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14))
-
-                // Per-round list
-                List(viewModel.results) { item in
-                    HStack {
-                        Text("Round \(item.round)")
-                        Spacer()
-                        Text("Breaths: \(item.breaths)")
+            Group {
+                if viewModel.results.isEmpty {
+                    VStack(spacing: 8) {
+                        Image(systemName: "wind")
+                            .font(.largeTitle)
                             .foregroundStyle(.secondary)
-                        Spacer(minLength: 12)
-                        Text(TimeFormatter.ms(item.retentionSeconds))
-                            .monospacedDigit()
+                        Text("No rounds recorded.")
+                            .foregroundStyle(.secondary)
                     }
-                    .accessibilityLabel("Round \(item.round), breaths \(item.breaths), retention \(TimeFormatter.ms(item.retentionSeconds))")
+                    .frame(maxWidth: .infinity)
+                } else {
+                    VStack(spacing: 8) {
+                        statRow("Best", value: best)
+                        statRow("Average", value: average)
+                        statRow("Total", value: total)
+                    }
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(viewModel.results) { item in
+                                HStack {
+                                    Text("Round \(item.round)")
+                                    Spacer()
+                                    Text("Breaths: \(item.breaths)")
+                                        .foregroundStyle(.secondary)
+                                    Spacer(minLength: 12)
+                                    Text(TimeFormatter.ms(item.retentionSeconds))
+                                        .monospacedDigit()
+                                }
+                                .padding(.vertical, 6)
+                                .accessibilityLabel("Round \(item.round), breaths \(item.breaths), retention \(TimeFormatter.ms(item.retentionSeconds))")
+                                Divider()
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
                 }
-                .listStyle(.insetGrouped)
             }
 
             Button("Done") { dismiss() }
@@ -71,6 +85,5 @@ struct BreathingResultsView: View {
 
 #Preview {
     let vm = BreathingViewModel(settings: .init(rounds: 3, breathsPerRound: 30, recoveryHoldSeconds: 15))
-    vm.handleSingleTap(); vm.handleSingleTap();
     NavigationStack { BreathingResultsView().environmentObject(vm) }
 }
