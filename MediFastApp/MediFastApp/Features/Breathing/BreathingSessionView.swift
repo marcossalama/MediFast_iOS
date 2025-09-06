@@ -7,10 +7,11 @@ struct BreathingSessionView: View {
     @EnvironmentObject private var viewModel: BreathingViewModel
 
     @State private var showResults = false
+    @State private var exitToSetup = false
+    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            VStack(spacing: 24) {
+        VStack(spacing: 24) {
                 HStack {
                     Text("Round \(viewModel.currentRound)/\(viewModel.settings.rounds)")
                         .font(.headline)
@@ -37,22 +38,30 @@ struct BreathingSessionView: View {
                     .foregroundStyle(.secondary)
 
                 Spacer()
-            }
-            .padding()
-            .navigationBarBackButtonHidden(true)
-            .contentShape(Rectangle())
-            .onTapGesture(count: 1) { viewModel.handleSingleTap() }
-            .onTapGesture(count: 2) { viewModel.handleDoubleTap() }
-            .task(id: context.date) {
-                viewModel.tick(isActive: scenePhase == .active)
-            }
-            .onChange(of: viewModel.phase) { _, newPhase in
-                if newPhase == .completed { showResults = true }
-            }
+        }
+        .padding()
+        .navigationBarBackButtonHidden(true)
+        .contentShape(Rectangle())
+        .onTapGesture(count: 1) { viewModel.handleSingleTap() }
+        .onTapGesture(count: 2) { viewModel.handleDoubleTap() }
+        .onReceive(timer) { _ in
+            viewModel.tick(isActive: scenePhase == .active)
+        }
+        .onChange(of: viewModel.phase) { _, newPhase in
+            if newPhase == .completed { showResults = true }
         }
         .navigationDestination(isPresented: $showResults) {
-            BreathingResultsView()
-                .environmentObject(viewModel)
+            BreathingResultsView(onDone: {
+                exitToSetup = true
+                showResults = false
+            })
+            .environmentObject(viewModel)
+        }
+        .onChange(of: showResults) { _, isShown in
+            if !isShown && exitToSetup {
+                exitToSetup = false
+                dismiss()
+            }
         }
     }
 

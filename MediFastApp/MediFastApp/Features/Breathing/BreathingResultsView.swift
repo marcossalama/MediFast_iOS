@@ -4,6 +4,7 @@ import SwiftUI
 struct BreathingResultsView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var viewModel: BreathingViewModel
+    var onDone: (() -> Void)? = nil
 
     private var durations: [TimeInterval] { viewModel.results.map { $0.retentionSeconds } }
     private var best: TimeInterval? { durations.max() }
@@ -63,7 +64,11 @@ struct BreathingResultsView: View {
                 }
             }
 
-            Button("Done") { dismiss() }
+            Button("Done") {
+                onDone?()
+                // Also dismiss locally in case we're pushed on a stack
+                dismiss()
+            }
                 .buttonStyle(.borderedProminent)
         }
         .padding()
