@@ -16,6 +16,9 @@ final class BreathingViewModel: ObservableObject {
     // Results per round (retention durations)
     @Published private(set) var results: [BreathingRoundResult] = []
 
+    // Auto-breath pacing (seconds accumulator)
+    private var breathTickCounter: Int = 0
+
     // Storage for settings/history (local only)
     private let storage: StorageProtocol
 
@@ -41,8 +44,17 @@ final class BreathingViewModel: ObservableObject {
         guard isActive else { return }
         switch phase {
         case .breathing:
-            // no auto timing; user taps to count breaths
-            break
+            // Auto-pace: increment breath count every paceSeconds while active
+            breathTickCounter += 1
+            if breathTickCounter >= max(1, settings.paceSeconds) {
+                breathTickCounter = 0
+                if breathCount < settings.breathsPerRound {
+                    breathCount += 1
+                    if breathCount >= settings.breathsPerRound {
+                        Haptics.impact(.soft) // hint that target breaths reached
+                    }
+                }
+            }
         case .retention:
             retentionElapsed += 1
         case .recovery:
@@ -58,11 +70,9 @@ final class BreathingViewModel: ObservableObject {
 extension BreathingViewModel {
     func handleSingleTap() {
         guard phase == .breathing else { return }
+        // Manual tap still increments, independent of auto pace
         breathCount += 1
-        if breathCount >= settings.breathsPerRound {
-            // soft hint via haptic; still requires double-tap to advance
-            Haptics.impact(.soft)
-        }
+        if breathCount >= settings.breathsPerRound { Haptics.impact(.soft) }
     }
 
     func handleDoubleTap() {
@@ -89,6 +99,7 @@ private extension BreathingViewModel {
     func startRetention() {
         phase = .retention
         retentionElapsed = 0
+        breathTickCounter = 0
         Haptics.impact(.medium)
     }
 
@@ -98,6 +109,7 @@ private extension BreathingViewModel {
         // Log the finished retention round
         let result = BreathingRoundResult(id: UUID(), round: currentRound, breaths: breathCount, retentionSeconds: retentionElapsed)
         results.append(result)
+        breathTickCounter = 0
         Haptics.impact(.light)
     }
 
@@ -108,11 +120,13 @@ private extension BreathingViewModel {
             breathCount = 0
             retentionElapsed = 0
             recoveryRemaining = 0
+            breathTickCounter = 0
             phase = .breathing
             Haptics.notify(.success)
         } else {
             phase = .completed
             recoveryRemaining = 0
+            breathTickCounter = 0
             Haptics.notify(.success)
             persistHistory()
         }

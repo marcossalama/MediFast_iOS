@@ -8,6 +8,7 @@ struct BreathingSetupView: View {
     @State private var goSession = false
     @State private var viewModel: BreathingViewModel? = nil
     private let storage: StorageProtocol = UserDefaultsStorage()
+    @State private var paceSeconds: Int = 3
 
     var body: some View {
         Form {
@@ -32,9 +33,18 @@ struct BreathingSetupView: View {
                 }
             }
 
+            Section("Breathing Pace") {
+                Picker("Pace", selection: $paceSeconds) {
+                    Text("Slow (4s)").tag(4)
+                    Text("Med (3s)").tag(3)
+                    Text("Fast (2s)").tag(2)
+                }
+                .pickerStyle(.segmented)
+            }
+
             Section {
                 Button {
-                    let settings = BreathingSettings(rounds: rounds, breathsPerRound: breathsPerRound, recoveryHoldSeconds: recoveryHoldSeconds)
+                    let settings = BreathingSettings(rounds: rounds, breathsPerRound: breathsPerRound, recoveryHoldSeconds: recoveryHoldSeconds, paceSeconds: paceSeconds)
                     viewModel = BreathingViewModel(settings: settings)
                     goSession = true
                 } label: {
@@ -58,6 +68,7 @@ struct BreathingSetupView: View {
                 rounds = saved.rounds
                 breathsPerRound = saved.breathsPerRound
                 recoveryHoldSeconds = saved.recoveryHoldSeconds
+                paceSeconds = saved.paceSeconds
             }
         }
     }

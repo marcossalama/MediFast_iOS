@@ -67,7 +67,7 @@ struct BreathingSessionView: View {
 
     private var instruction: String {
         switch viewModel.phase {
-        case .breathing: return "Tap to count a breath. Double‑tap to hold."
+        case .breathing: return "Auto‑pace every \(viewModel.settings.paceSeconds)s. Double‑tap to hold."
         case .retention: return "Double‑tap for recovery breath."
         case .recovery: return "Auto‑advance after countdown. Double‑tap to skip."
         case .completed: return "Session completed."
