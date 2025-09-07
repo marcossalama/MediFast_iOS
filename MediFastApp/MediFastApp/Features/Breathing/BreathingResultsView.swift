@@ -8,83 +8,73 @@ struct BreathingResultsView: View {
 
     private var durations: [TimeInterval] { viewModel.results.map { $0.retentionSeconds } }
     private var best: TimeInterval? { durations.max() }
-    private var average: TimeInterval? {
-        guard !durations.isEmpty else { return nil }
-        return durations.reduce(0, +) / Double(durations.count)
-    }
-    private var total: TimeInterval? {
-        guard !durations.isEmpty else { return nil }
-        return durations.reduce(0, +)
-    }
+    private var average: TimeInterval? { durations.isEmpty ? nil : durations.reduce(0, +) / Double(durations.count) }
+    private var total: TimeInterval? { durations.isEmpty ? nil : durations.reduce(0, +) }
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Session Summary")
-                .font(.title2)
+        ZStack { Theme.background.ignoresSafeArea()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Session Summary").sectionStyle().cardPadding()
 
-            Group {
-                if viewModel.results.isEmpty {
-                    VStack(spacing: 8) {
-                        Image(systemName: "wind")
-                            .font(.largeTitle)
-                            .foregroundStyle(.secondary)
-                        Text("No rounds recorded.")
-                            .foregroundStyle(.secondary)
-                    }
-                    .frame(maxWidth: .infinity)
-                } else {
-                    VStack(spacing: 8) {
-                        statRow("Best", value: best)
-                        statRow("Average", value: average)
-                        statRow("Total", value: total)
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
-
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(viewModel.results) { item in
-                                HStack {
-                                    Text("Round \(item.round)")
-                                    Spacer()
-                                    Text("Breaths: \(item.breaths)")
-                                        .foregroundStyle(.secondary)
-                                    Spacer(minLength: 12)
-                                    Text(TimeFormatter.ms(item.retentionSeconds))
-                                        .monospacedDigit()
-                                }
-                                .padding(.vertical, 6)
-                                .accessibilityLabel("Round \(item.round), breaths \(item.breaths), retention \(TimeFormatter.ms(item.retentionSeconds))")
-                                Divider()
+                    if viewModel.results.isEmpty {
+                        Card {
+                            VStack(spacing: 8) {
+                                Image(systemName: "wind").font(.largeTitle).foregroundStyle(.secondary)
+                                Text("No rounds recorded.").foregroundStyle(.secondary)
                             }
-                        }
-                        .padding(.horizontal)
-                    }
-                }
-            }
+                            .frame(maxWidth: .infinity)
+                        }.cardPadding()
+                    } else {
+                        Card {
+                            VStack(alignment: .leading, spacing: 12) {
+                                statRow("Best", value: best)
+                                Divider()
+                                statRow("Average", value: average)
+                                Divider()
+                                statRow("Total", value: total)
+                            }
+                        }.cardPadding()
 
-            Button("Done") {
-                onDone?()
-                // Also dismiss locally in case we're pushed on a stack
-                dismiss()
+                        Text("Rounds").sectionStyle().cardPadding()
+                        Card {
+                            VStack(spacing: 12) {
+                                ForEach(viewModel.results) { item in
+                                    HStack {
+                                        Text("Round \(item.round)")
+                                        Spacer()
+                                        Text("Breaths: \(item.breaths)").foregroundStyle(.secondary)
+                                        Spacer(minLength: 12)
+                                        Text(TimeFormatter.ms(item.retentionSeconds)).monospacedDigit()
+                                    }
+                                    .accessibilityLabel("Round \(item.round), breaths \(item.breaths), retention \(TimeFormatter.ms(item.retentionSeconds))")
+                                    if item.id != viewModel.results.last?.id { Divider() }
+                                }
+                            }
+                        }.cardPadding()
+                    }
+
+                    Color.clear.frame(height: 80)
+                }
+                .padding(.top, 8)
             }
-                .buttonStyle(.borderedProminent)
         }
-        .padding()
         .navigationBarBackButtonHidden(true)
         .onAppear { Haptics.notify(.success) }
+        .safeAreaInset(edge: .bottom) {
+            HStack {
+                Button { onDone?(); dismiss() } label: { Text("Done").frame(maxWidth: .infinity) }
+                    .buttonStyle(PrimaryButtonStyle())
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
+            .background(.ultraThinMaterial)
+        }
     }
 
     private func statRow(_ title: String, value: TimeInterval?) -> some View {
-        HStack {
-            Text(title)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Text(value.map(TimeFormatter.ms) ?? "—")
-                .monospacedDigit()
-        }
-        .accessibilityLabel("\(title): \(value.map(TimeFormatter.ms) ?? "none")")
+        HStack { Text(title).foregroundStyle(.secondary); Spacer(); Text(value.map(TimeFormatter.ms) ?? "—").monospacedDigit() }
+            .accessibilityLabel("\(title): \(value.map(TimeFormatter.ms) ?? "none")")
     }
 }
 
