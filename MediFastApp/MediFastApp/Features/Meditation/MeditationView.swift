@@ -1,8 +1,13 @@
 import SwiftUI
 
+private struct SessionRow: Identifiable, Equatable {
+    let id: UUID
+    var minutes: Int
+}
+
 struct MeditationView: View {
     @StateObject private var viewModel = MeditationViewModel()
-    @State private var sessions: [Int] = [10]
+    @State private var rows: [SessionRow] = [SessionRow(id: UUID(), minutes: 10)]
     @State private var warmup: Int = 0
     @State private var goFocus: Bool = false
     private let storage: StorageProtocol = UserDefaultsStorage()
@@ -10,25 +15,24 @@ struct MeditationView: View {
     var body: some View {
         Form {
             Section("Sessions") {
-                ForEach(Array(sessions.enumerated()), id: \.offset) { item in
-                    let idx = item.offset
-                    Stepper(value: Binding(get: { sessions[idx] }, set: { sessions[idx] = min(59, max(1, $0)) }), in: 1...59) {
-                        Text("Session \(idx + 1): \(sessions[idx]) min")
+                ForEach(Array(rows.indices), id: \.self) { idx in
+                    Stepper(value: $rows[idx].minutes, in: 1...59) {
+                        Text("Session \(idx + 1): \(rows[idx].minutes) min")
                     }
                 }
                 HStack {
                     Button {
-                        if sessions.count < 9 {
-                            let next = min(59, max(1, sessions.last ?? 10))
-                            sessions.append(next)
+                        if rows.count < 9 {
+                            let next = min(59, max(1, rows.last?.minutes ?? 10))
+                            rows.append(SessionRow(id: UUID(), minutes: next))
                         }
                     } label: { Label("Add Session", systemImage: "plus") }
-                    .disabled(sessions.count >= 9)
+                    .disabled(rows.count >= 9)
                     Spacer()
                     Button(role: .destructive) {
-                        if sessions.count > 1 { _ = sessions.removeLast() }
+                        if rows.count > 1 { _ = rows.removeLast() }
                     } label: { Label("Remove Last", systemImage: "minus") }
-                    .disabled(sessions.count <= 1)
+                    .disabled(rows.count <= 1)
                 }
             }
 
@@ -40,7 +44,7 @@ struct MeditationView: View {
 
             Section {
                 Button {
-                    let plan = MeditationPlan(sessionsMinutes: sessions, warmupSeconds: warmup == 0 ? nil : warmup)
+                    let plan = MeditationPlan(sessionsMinutes: rows.map { $0.minutes }, warmupSeconds: warmup == 0 ? nil : warmup)
                     try? storage.save(plan, forKey: UDKeys.meditationPlan)
                     viewModel.startPlan(plan)
                     goFocus = true
@@ -57,10 +61,11 @@ struct MeditationView: View {
         }
         .onAppear {
             if let plan: MeditationPlan = try? storage.load(MeditationPlan.self, forKey: UDKeys.meditationPlan) {
-                sessions = plan.sessionsMinutes.isEmpty ? [10] : plan.sessionsMinutes
+                let mins = plan.sessionsMinutes.isEmpty ? [10] : plan.sessionsMinutes
+                rows = mins.map { SessionRow(id: UUID(), minutes: min(59, max(1, $0))) }
                 warmup = plan.warmupSeconds ?? 0
             } else {
-                sessions = [viewModel.selectedMinutes]
+                rows = [SessionRow(id: UUID(), minutes: max(1, viewModel.selectedMinutes))]
                 warmup = viewModel.warmupSeconds ?? 0
             }
         }
