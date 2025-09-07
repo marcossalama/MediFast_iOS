@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Setup screen for guided breathing (Wim Hof style). Minimal scaffold UI.
+/// Setup screen for guided breathing (Wim Hof style).
 struct BreathingSetupView: View {
     @State private var rounds: Int = 5
     @State private var breathsPerRound: Int = 30
@@ -11,59 +11,85 @@ struct BreathingSetupView: View {
     @State private var paceSeconds: Int = 3
 
     var body: some View {
-        Form {
-            Section("Mode") {
-                Picker("Breaths", selection: $breathsPerRound) {
-                    Text("25").tag(25)
-                    Text("30").tag(30)
-                    Text("35").tag(35)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Mode").sectionStyle().cardPadding()
+                Card {
+                    Picker("Breaths", selection: $breathsPerRound) {
+                        Text("25").tag(25)
+                        Text("30").tag(30)
+                        Text("35").tag(35)
+                    }
+                    .pickerStyle(.segmented)
                 }
-                .pickerStyle(.segmented)
-            }
+                .cardPadding()
 
-            Section("Rounds") {
-                Stepper(value: $rounds, in: 1...8) {
-                    Text("Rounds: \(rounds)")
+                Text("Rounds").sectionStyle().cardPadding()
+                Card {
+                    HStack {
+                        Text("Rounds: \(rounds)")
+                        Spacer()
+                        HStack(spacing: 8) {
+                            Button { rounds = max(1, rounds - 1); Haptics.impact(.light) } label: { Image(systemName: "minus") }
+                                .buttonStyle(IconPillButtonStyle())
+                            Button { rounds = min(8, rounds + 1); Haptics.impact(.light) } label: { Image(systemName: "plus") }
+                                .buttonStyle(IconPillButtonStyle())
+                        }
+                    }
                 }
-            }
+                .cardPadding()
 
-            Section("Recovery Hold") {
-                Stepper(value: $recoveryHoldSeconds, in: 5...60, step: 5) {
-                    Text("Hold: \(recoveryHoldSeconds)s")
+                Text("Recovery Hold").sectionStyle().cardPadding()
+                Card {
+                    HStack {
+                        Text("Hold: \(recoveryHoldSeconds)s")
+                        Spacer()
+                        HStack(spacing: 8) {
+                            Button { recoveryHoldSeconds = max(5, recoveryHoldSeconds - 5); Haptics.impact(.light) } label: { Image(systemName: "minus") }
+                                .buttonStyle(IconPillButtonStyle())
+                            Button { recoveryHoldSeconds = min(60, recoveryHoldSeconds + 5); Haptics.impact(.light) } label: { Image(systemName: "plus") }
+                                .buttonStyle(IconPillButtonStyle())
+                        }
+                    }
                 }
-            }
+                .cardPadding()
 
-            Section("Breathing Pace") {
-                Picker("Pace", selection: $paceSeconds) {
-                    Text("Slow (4s)").tag(4)
-                    Text("Med (3s)").tag(3)
-                    Text("Fast (2s)").tag(2)
+                Text("Breathing Pace").sectionStyle().cardPadding()
+                Card {
+                    Picker("Pace", selection: $paceSeconds) {
+                        Text("Slow (4s)").tag(4)
+                        Text("Med (3s)").tag(3)
+                        Text("Fast (2s)").tag(2)
+                    }
+                    .pickerStyle(.segmented)
                 }
-                .pickerStyle(.segmented)
-            }
+                .cardPadding()
 
-            Section {
+                Color.clear.frame(height: 80)
+            }
+            .padding(.top, 8)
+        }
+        .background(Theme.background)
+        .navigationTitle("Guided Breathing")
+        .safeAreaInset(edge: .bottom) {
+            HStack {
                 Button {
                     let settings = BreathingSettings(rounds: rounds, breathsPerRound: breathsPerRound, recoveryHoldSeconds: recoveryHoldSeconds, paceSeconds: paceSeconds)
                     viewModel = BreathingViewModel(settings: settings)
                     goSession = true
-                } label: {
-                    Label("Start", systemImage: "play.circle.fill")
-                        .font(.title3)
-                }
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity, alignment: .center)
+                } label: { Text("Start").frame(maxWidth: .infinity) }
+                .buttonStyle(PrimaryButtonStyle())
             }
+            .padding(.horizontal, 16)
+            .padding(.top, 8)
+            .background(.ultraThinMaterial)
         }
-        .navigationTitle("Guided Breathing")
         .navigationDestination(isPresented: $goSession) {
             if let vm = viewModel {
-                BreathingSessionView()
-                    .environmentObject(vm)
+                BreathingSessionView().environmentObject(vm)
             }
         }
         .onAppear {
-            // Load last-used settings if available
             if let saved: BreathingSettings = try? storage.load(BreathingSettings.self, forKey: UDKeys.breathingSettings) {
                 rounds = saved.rounds
                 breathsPerRound = saved.breathsPerRound
@@ -74,6 +100,4 @@ struct BreathingSetupView: View {
     }
 }
 
-#Preview {
-    NavigationStack { BreathingSetupView() }
-}
+#Preview { NavigationStack { BreathingSetupView() } }

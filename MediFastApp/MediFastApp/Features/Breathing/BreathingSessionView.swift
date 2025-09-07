@@ -11,68 +11,61 @@ struct BreathingSessionView: View {
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        VStack(spacing: 24) {
+        ZStack {
+            Theme.background.ignoresSafeArea()
+            VStack(spacing: 20) {
                 HStack {
                     Text("Round \(viewModel.currentRound)/\(viewModel.settings.rounds)")
                         .font(.headline)
                     Spacer()
-                    Button("Finish") { viewModel.finishEarly(); showResults = true }
-                    .buttonStyle(.bordered)
+                    Button { viewModel.finishEarly(); showResults = true } label: { Text("Finish") }
+                        .buttonStyle(IconPillButtonStyle())
                 }
                 .padding(.horizontal)
 
                 Text(viewModel.phase.title)
-                    .font(.title2)
+                    .font(Theme.Type.title)
 
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Color.gray.opacity(0.1))
-                        .frame(width: 240, height: 240)
-                        .scaleEffect(viewModel.phase == .breathing ? (viewModel.breathPhase == .inhale ? 1.04 : 0.98) : 1.0)
-                        .animation(.easeInOut(duration: 0.9), value: viewModel.breathPhase)
-                    Text(viewModel.displayValue)
-                        .font(.system(size: 56, weight: .medium, design: .rounded))
-                        .monospacedDigit()
-                }
+                Card {
+                    VStack(spacing: 8) {
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .fill(Theme.surface)
+                            .frame(height: 240)
+                            .scaleEffect(viewModel.phase == .breathing ? (viewModel.breathPhase == .inhale ? 1.03 : 0.97) : 1.0)
+                            .animation(.easeInOut(duration: 0.9), value: viewModel.breathPhase)
+                            .overlay(
+                                Text(viewModel.displayValue)
+                                    .font(Theme.Type.numeric)
+                            )
 
-                if viewModel.phase == .breathing {
-                    Text(viewModel.breathPhase == .inhale ? "Inhale" : "Exhale")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                        .transition(.opacity)
-                        .id(viewModel.breathPhase == .inhale ? "inhale" : "exhale")
+                        if viewModel.phase == .breathing {
+                            Text(viewModel.breathPhase == .inhale ? "Inhale" : "Exhale")
+                                .foregroundStyle(Theme.textSecondary)
+                                .transition(.opacity)
+                                .id(viewModel.breathPhase == .inhale ? "inhale" : "exhale")
+                        }
+                    }
                 }
+                .cardPadding()
 
                 Text(instruction)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                    .padding(.horizontal)
 
-                Spacer()
+                Spacer(minLength: 20)
+            }
         }
-        .padding()
         .navigationBarBackButtonHidden(true)
         .contentShape(Rectangle())
         .onTapGesture(count: 1) { viewModel.handleSingleTap() }
         .onTapGesture(count: 2) { viewModel.handleDoubleTap() }
-        .onReceive(timer) { _ in
-            viewModel.tick(isActive: scenePhase == .active)
-        }
-        .onChange(of: viewModel.phase) { _, newPhase in
-            if newPhase == .completed { showResults = true }
-        }
+        .onReceive(timer) { _ in viewModel.tick(isActive: scenePhase == .active) }
+        .onChange(of: viewModel.phase) { _, newPhase in if newPhase == .completed { showResults = true } }
         .navigationDestination(isPresented: $showResults) {
-            BreathingResultsView(onDone: {
-                exitToSetup = true
-                showResults = false
-            })
-            .environmentObject(viewModel)
+            BreathingResultsView(onDone: { exitToSetup = true; showResults = false }).environmentObject(viewModel)
         }
-        .onChange(of: showResults) { _, isShown in
-            if !isShown && exitToSetup {
-                exitToSetup = false
-                dismiss()
-            }
-        }
+        .onChange(of: showResults) { _, isShown in if !isShown && exitToSetup { exitToSetup = false; dismiss() } }
     }
 
     private var instruction: String {
