@@ -9,6 +9,8 @@ struct BreathingSetupView: View {
     @State private var viewModel: BreathingViewModel? = nil
     private let storage: StorageProtocol = UserDefaultsStorage()
     @State private var paceSeconds: Int = 3
+    @State private var vibrateAfterRound: Bool = false
+    @State private var dingAfterRound: Bool = false
 
     var body: some View {
         ScrollView {
@@ -65,6 +67,18 @@ struct BreathingSetupView: View {
                 }
                 .cardPadding()
 
+                Text("Feedback").sectionStyle().cardPadding()
+                Card {
+                    Toggle(isOn: $vibrateAfterRound) {
+                        Label("Vibrate after round", systemImage: "waveform")
+                    }
+                    Divider()
+                    Toggle(isOn: $dingAfterRound) {
+                        Label("Ding after round", systemImage: "bell")
+                    }
+                }
+                .cardPadding()
+
                 Color.clear.frame(height: 80)
             }
             .padding(.top, 8)
@@ -74,11 +88,18 @@ struct BreathingSetupView: View {
         .safeAreaInset(edge: .bottom) {
             HStack {
                 Button {
-                    let settings = BreathingSettings(rounds: rounds, breathsPerRound: breathsPerRound, recoveryHoldSeconds: recoveryHoldSeconds, paceSeconds: paceSeconds)
+                    let settings = BreathingSettings(
+                        rounds: rounds,
+                        breathsPerRound: breathsPerRound,
+                        recoveryHoldSeconds: recoveryHoldSeconds,
+                        paceSeconds: paceSeconds,
+                        vibrateAfterRound: vibrateAfterRound,
+                        dingAfterRound: dingAfterRound
+                    )
                     viewModel = BreathingViewModel(settings: settings)
                     goSession = true
                 } label: { Text("Start").frame(maxWidth: .infinity) }
-                .buttonStyle(PrimaryButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle())
             }
             .padding(.horizontal, 16)
             .padding(.top, 8)
@@ -95,6 +116,8 @@ struct BreathingSetupView: View {
                 breathsPerRound = saved.breathsPerRound
                 recoveryHoldSeconds = saved.recoveryHoldSeconds
                 paceSeconds = saved.paceSeconds
+                vibrateAfterRound = saved.vibrateAfterRound
+                dingAfterRound = saved.dingAfterRound
             }
         }
     }

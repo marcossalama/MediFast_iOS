@@ -126,9 +126,9 @@ private extension BreathingViewModel {
         let result = BreathingRoundResult(id: UUID(), round: currentRound, breaths: breathCount, retentionSeconds: retentionElapsed)
         results.append(result)
         breathTickCounter = 0
-        Haptics.impact(.light)
-        // Gentle bell as we exit retention into recovery
-        AudioPlayer.shared.play(named: Sounds.bellMid)
+        // Optional feedback on round transition
+        if settings.vibrateAfterRound { Haptics.impact(.medium) }
+        if settings.dingAfterRound { AudioPlayer.shared.play(named: Sounds.bellMid) }
     }
 
     func advanceAfterRecovery() {
