@@ -13,7 +13,7 @@ struct FastingView: View {
                         Card {
                             VStack(spacing: 16) {
                                 Text(viewModel.isActive ? TimeFormatter.hms(viewModel.liveElapsed(now: context.date)) : "00:00:00")
-                                    .font(Theme.Type.numeric)
+                                    .font(Theme.Typography.numeric)
                                     .frame(maxWidth: .infinity)
                                 if viewModel.isActive {
                                     Button { viewModel.stopFast(); Haptics.notify(.success) } label: { Text("Stop Fast").frame(maxWidth: .infinity) }

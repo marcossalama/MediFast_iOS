@@ -24,7 +24,7 @@ struct BreathingSessionView: View {
                 .padding(.horizontal)
 
                 Text(viewModel.phase.title)
-                    .font(Theme.Type.title)
+                    .font(Theme.Typography.title)
 
                 Card {
                     VStack(spacing: 8) {
@@ -35,7 +35,7 @@ struct BreathingSessionView: View {
                             .animation(.easeInOut(duration: 0.9), value: viewModel.breathPhase)
                             .overlay(
                                 Text(viewModel.displayValue)
-                                    .font(Theme.Type.numeric)
+                                    .font(Theme.Typography.numeric)
                             )
 
                         if viewModel.phase == .breathing {

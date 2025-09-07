@@ -14,7 +14,7 @@ enum Theme {
     static let spacing: CGFloat = 12
 
     // Typography
-    enum Type {
+    enum Typography {
         static let title = Font.system(.title2, design: .rounded).weight(.semibold)
         static let section = Font.system(.caption, design: .rounded).weight(.semibold)
         static let body = Font.system(.body, design: .rounded)
@@ -25,10 +25,9 @@ enum Theme {
 /// Section header text style shortcut.
 extension Text {
     func sectionStyle() -> some View {
-        self.font(Theme.Type.section)
+        self.font(Theme.Typography.section)
             .foregroundStyle(Theme.textSecondary)
             .textCase(.uppercase)
             .tracking(0.5)
     }
 }
-

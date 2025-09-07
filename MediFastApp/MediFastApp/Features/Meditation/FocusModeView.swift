@@ -21,7 +21,7 @@ struct FocusModeView: View {
                     ZStack {
                         RingProgress(progress: viewModel.progress, size: 260, lineWidth: 14, tint: Theme.primary, track: Color.secondary.opacity(0.2))
                         Text(timeDisplay)
-                            .font(Theme.Type.numeric)
+                            .font(Theme.Typography.numeric)
                     }
 
                     if viewModel.state == .warmup {
