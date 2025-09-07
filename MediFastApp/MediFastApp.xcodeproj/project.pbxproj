@@ -36,6 +36,9 @@ objects = {
         AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100272F00000000000001 /* BreathingRoundResult.swift */; };
         AAB100282F00000000000001 /* BreathingResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100282F00000000000001 /* BreathingResultsView.swift */; };
         AAB100292F00000000000001 /* MeditationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100292F00000000000001 /* MeditationPlan.swift */; };
+        AAB1002A2F00000000000001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002A2F00000000000001 /* Theme.swift */; };
+        AAB1002B2F00000000000001 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002B2F00000000000001 /* Card.swift */; };
+        AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002C2F00000000000001 /* ButtonStyles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,9 @@ objects = {
         AAF100272F00000000000001 /* BreathingRoundResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingRoundResult.swift; path = MediFastApp/Models/BreathingRoundResult.swift; sourceTree = SOURCE_ROOT; };
         AAF100282F00000000000001 /* BreathingResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingResultsView.swift; path = MediFastApp/Features/Breathing/BreathingResultsView.swift; sourceTree = SOURCE_ROOT; };
         AAF100292F00000000000001 /* MeditationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationPlan.swift; path = MediFastApp/Models/MeditationPlan.swift; sourceTree = SOURCE_ROOT; };
+        AAF1002A2F00000000000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = MediFastApp/Shared/Design/Theme.swift; sourceTree = SOURCE_ROOT; };
+        AAF1002B2F00000000000001 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Card.swift; path = MediFastApp/Shared/Design/Card.swift; sourceTree = SOURCE_ROOT; };
+        AAF1002C2F00000000000001 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonStyles.swift; path = MediFastApp/Shared/Design/ButtonStyles.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -248,10 +254,13 @@ objects = {
 					AAF100112F00000000000001 /* AudioPlayer.swift */,
 					AAF100122F00000000000001 /* TimeFormatter.swift */,
                 AAF100132F00000000000001 /* Sounds.swift */,
-                    AAF100232F00000000000001 /* BreathingSetupView.swift */,
-                    AAF100242F00000000000001 /* BreathingSessionView.swift */,
-                    AAF100282F00000000000001 /* BreathingResultsView.swift */,
-                    AAF100252F00000000000001 /* BreathingViewModel.swift */,
+                AAF1002A2F00000000000001 /* Theme.swift */,
+                AAF1002B2F00000000000001 /* Card.swift */,
+                AAF1002C2F00000000000001 /* ButtonStyles.swift */,
+                AAF100232F00000000000001 /* BreathingSetupView.swift */,
+                AAF100242F00000000000001 /* BreathingSessionView.swift */,
+                AAF100282F00000000000001 /* BreathingResultsView.swift */,
+                AAF100252F00000000000001 /* BreathingViewModel.swift */,
                 AAF100262F00000000000001 /* BreathingSettings.swift */,
                 AAF100272F00000000000001 /* BreathingRoundResult.swift */,
                 AAF100292F00000000000001 /* MeditationPlan.swift */,
@@ -346,6 +355,9 @@ objects = {
                 AAB100252F00000000000001 /* BreathingViewModel.swift in Sources */,
                 AAB100262F00000000000001 /* BreathingSettings.swift in Sources */,
                 AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */,
+                AAB1002A2F00000000000001 /* Theme.swift in Sources */,
+                AAB1002B2F00000000000001 /* Card.swift in Sources */,
+                AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */,
                 AAB100292F00000000000001 /* MeditationPlan.swift in Sources */,
             );
 			runOnlyForDeploymentPostprocessing = 0;
