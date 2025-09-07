@@ -137,8 +137,9 @@ final class MeditationViewModel: ObservableObject {
 
         let next = currentIndex + 1
         if next < totalSessions {
-            // 2s vibration between sessions
-            Haptics.pulse(duration: 2.0, interval: 0.25, style: .rigid)
+            // Optional feedback after each session
+            if plan.vibrateAfterSession { Haptics.pulse(duration: 2.0, interval: 0.25, style: .rigid) }
+            if plan.dingAfterSession { AudioPlayer.shared.play(named: Sounds.bellMid) }
             beginSession(index: next, playStartBell: false)
         } else {
             state = .completed

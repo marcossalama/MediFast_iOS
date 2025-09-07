@@ -10,6 +10,8 @@ struct MeditationView: View {
     @State private var rows: [SessionRow] = [SessionRow(id: UUID(), minutes: 10)]
     @State private var warmup: Int = 0
     @State private var goFocus: Bool = false
+    @State private var vibrateAfterSession: Bool = false
+    @State private var dingAfterSession: Bool = false
     private let storage: StorageProtocol = UserDefaultsStorage()
 
     var body: some View {
@@ -55,6 +57,18 @@ struct MeditationView: View {
                 }
                 .cardPadding()
 
+                Text("Feedback").sectionStyle().cardPadding()
+                Card {
+                    Toggle(isOn: $vibrateAfterSession) {
+                        Label("Vibrate after session", systemImage: "waveform")
+                    }
+                    Divider()
+                    Toggle(isOn: $dingAfterSession) {
+                        Label("Ding after session", systemImage: "bell")
+                    }
+                }
+                .cardPadding()
+
                 Text("Warm-up").sectionStyle().cardPadding()
                 Card {
                     HStack {
@@ -84,6 +98,8 @@ struct MeditationView: View {
                 let mins = plan.sessionsMinutes.isEmpty ? [10] : plan.sessionsMinutes
                 rows = mins.map { SessionRow(id: UUID(), minutes: min(59, max(1, $0))) }
                 warmup = plan.warmupSeconds ?? 0
+                vibrateAfterSession = plan.vibrateAfterSession
+                dingAfterSession = plan.dingAfterSession
             } else {
                 rows = [SessionRow(id: UUID(), minutes: max(1, viewModel.selectedMinutes))]
                 warmup = viewModel.warmupSeconds ?? 0
@@ -93,7 +109,12 @@ struct MeditationView: View {
         .safeAreaInset(edge: .bottom) {
             HStack {
                 Button {
-                    let plan = MeditationPlan(sessionsMinutes: rows.map { $0.minutes }, warmupSeconds: warmup == 0 ? nil : warmup)
+                    let plan = MeditationPlan(
+                        sessionsMinutes: rows.map { $0.minutes },
+                        warmupSeconds: warmup == 0 ? nil : warmup,
+                        vibrateAfterSession: vibrateAfterSession,
+                        dingAfterSession: dingAfterSession
+                    )
                     try? storage.save(plan, forKey: UDKeys.meditationPlan)
                     viewModel.startPlan(plan)
                     goFocus = true
