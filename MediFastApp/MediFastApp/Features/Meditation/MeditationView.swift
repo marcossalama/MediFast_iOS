@@ -15,9 +15,10 @@ struct MeditationView: View {
     var body: some View {
         Form {
             Section("Sessions") {
-                ForEach(Array(rows.indices), id: \.self) { idx in
-                    Stepper(value: $rows[idx].minutes, in: 1...59) {
-                        Text("Session \(idx + 1): \(rows[idx].minutes) min")
+                ForEach($rows) { $row in
+                    let idx = rows.firstIndex(where: { $0.id == row.id }) ?? 0
+                    Stepper(value: $row.minutes, in: 1...59) {
+                        Text("Session \(idx + 1): \(row.minutes) min")
                     }
                 }
                 HStack {
