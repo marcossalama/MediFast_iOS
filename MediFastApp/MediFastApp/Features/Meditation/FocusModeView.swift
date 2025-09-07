@@ -1,64 +1,43 @@
 import SwiftUI
 
-/// Full-screen focus mode with minimal progress and large timer.
+/// Full-screen focus mode with gradient, ring progress, and toolbar exit.
 struct FocusModeView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var viewModel: MeditationViewModel
-    @State private var hasPlayedStart = false
 
     var body: some View {
         TimelineView(.periodic(from: .now, by: 1)) { context in
             ZStack {
-                Color.black.ignoresSafeArea()
+                LinearGradient(colors: [Theme.primary.opacity(0.18), Theme.background], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .ignoresSafeArea()
+
                 VStack(spacing: 24) {
-                    // Session indicator
                     if viewModel.state == .running || viewModel.state == .warmup {
                         Text("Session \(viewModel.currentSessionNumber)/\(viewModel.totalSessions)")
                             .font(.headline)
-                            .foregroundStyle(.white.opacity(0.9))
                     }
-                    // Progress
-                    ProgressView(value: viewModel.progress)
-                        .progressViewStyle(.linear)
-                        .tint(.white.opacity(0.8))
-                        .padding(.horizontal)
 
-                    // Time remaining
-                    Text(timeDisplay)
-                        .font(.system(size: 56, weight: .medium, design: .rounded))
-                        .monospacedDigit()
-                        .foregroundStyle(.white)
-
-                    Button {
-                        viewModel.cancel()
-                        dismiss()
-                    } label: {
-                        Text("Exit")
-                            .font(.title3)
+                    ZStack {
+                        RingProgress(progress: viewModel.progress, size: 260, lineWidth: 14, tint: Theme.primary, track: Color.secondary.opacity(0.2))
+                        Text(timeDisplay)
+                            .font(Theme.Type.numeric)
                     }
-                    .buttonStyle(.borderedProminent)
+
+                    if viewModel.state == .warmup {
+                        Text("Warm‑up").foregroundStyle(.secondary)
+                    }
+
+                    Spacer(minLength: 12)
                 }
+                .padding(.top, 12)
             }
-            .onChange(of: scenePhase) { _, newPhase in
-                // ticks only when active; we still set explicit paused state
-                if newPhase != .active {
-                    // mark paused
-                    viewModel.tick(isActive: false)
-                }
-            }
+            .toolbar { ToolbarItem(placement: .navigationBarTrailing) { Button { viewModel.cancel(); dismiss() } label: { Image(systemName: "xmark.circle.fill") } } }
+            .onChange(of: scenePhase) { _, newPhase in if newPhase != .active { viewModel.tick(isActive: false) } }
             .onAppear { setIdleDisabled(true) }
             .onDisappear { setIdleDisabled(false) }
-            .task(id: context.date) {
-                viewModel.tick(isActive: scenePhase == .active)
-            }
+            .task(id: context.date) { viewModel.tick(isActive: scenePhase == .active) }
             .accessibilityLabel("Meditation Focus Mode")
-            .contentShape(Rectangle())
-            .onTapGesture {
-                // tap anywhere to exit focus mode
-                viewModel.cancel()
-                dismiss()
-            }
         }
     }
 
