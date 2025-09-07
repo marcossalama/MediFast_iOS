@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct MediFastAppApp: App {
+    init() {
+        Appearance.apply()
+    }
     var body: some Scene {
         WindowGroup {
             RootTabView()
+                .tint(Theme.primary)
         }
     }
 }

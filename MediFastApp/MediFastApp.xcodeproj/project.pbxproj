@@ -39,6 +39,7 @@ objects = {
         AAB1002A2F00000000000001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002A2F00000000000001 /* Theme.swift */; };
         AAB1002B2F00000000000001 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002B2F00000000000001 /* Card.swift */; };
         AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002C2F00000000000001 /* ButtonStyles.swift */; };
+        AAB1002D2F00000000000001 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002D2F00000000000001 /* Appearance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@ objects = {
         AAF1002A2F00000000000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = MediFastApp/Shared/Design/Theme.swift; sourceTree = SOURCE_ROOT; };
         AAF1002B2F00000000000001 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Card.swift; path = MediFastApp/Shared/Design/Card.swift; sourceTree = SOURCE_ROOT; };
         AAF1002C2F00000000000001 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonStyles.swift; path = MediFastApp/Shared/Design/ButtonStyles.swift; sourceTree = SOURCE_ROOT; };
+        AAF1002D2F00000000000001 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = MediFastApp/Shared/Design/Appearance.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -257,6 +259,7 @@ objects = {
                 AAF1002A2F00000000000001 /* Theme.swift */,
                 AAF1002B2F00000000000001 /* Card.swift */,
                 AAF1002C2F00000000000001 /* ButtonStyles.swift */,
+                AAF1002D2F00000000000001 /* Appearance.swift */,
                 AAF100232F00000000000001 /* BreathingSetupView.swift */,
                 AAF100242F00000000000001 /* BreathingSessionView.swift */,
                 AAF100282F00000000000001 /* BreathingResultsView.swift */,
@@ -359,6 +362,7 @@ objects = {
                 AAB1002B2F00000000000001 /* Card.swift in Sources */,
                 AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */,
                 AAB100292F00000000000001 /* MeditationPlan.swift in Sources */,
+                AAB1002D2F00000000000001 /* Appearance.swift in Sources */,
             );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

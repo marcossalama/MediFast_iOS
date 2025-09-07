@@ -2,7 +2,9 @@ import SwiftUI
 
 struct RootTabView: View {
     var body: some View {
-        TabView {
+        ZStack {
+            Theme.background.ignoresSafeArea()
+            TabView {
             NavigationStack {
                 MeditationView()
             }
@@ -26,6 +28,7 @@ struct RootTabView: View {
                     Image(systemName: "hourglass")
                     Text("Fast")
                 }
+            }
         }
     }
 }
