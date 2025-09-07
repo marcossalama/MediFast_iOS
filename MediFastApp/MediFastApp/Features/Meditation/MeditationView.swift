@@ -17,8 +17,19 @@ struct MeditationView: View {
             Section("Sessions") {
                 ForEach($rows) { $row in
                     let idx = rows.firstIndex(where: { $0.id == row.id }) ?? 0
-                    Stepper(value: $row.minutes, in: 1...59) {
+                    HStack {
                         Text("Session \(idx + 1): \(row.minutes) min")
+                        Spacer()
+                        HStack(spacing: 12) {
+                            Button { row.minutes = max(1, row.minutes - 1) } label: {
+                                Image(systemName: "minus")
+                            }
+                            .buttonStyle(.borderless)
+                            Button { row.minutes = min(59, row.minutes + 1) } label: {
+                                Image(systemName: "plus")
+                            }
+                            .buttonStyle(.borderless)
+                        }
                     }
                 }
                 HStack {
@@ -28,11 +39,13 @@ struct MeditationView: View {
                             rows.append(SessionRow(id: UUID(), minutes: next))
                         }
                     } label: { Label("Add Session", systemImage: "plus") }
+                    .buttonStyle(.borderless)
                     .disabled(rows.count >= 9)
                     Spacer()
                     Button(role: .destructive) {
                         if rows.count > 1 { _ = rows.removeLast() }
                     } label: { Label("Remove Last", systemImage: "minus") }
+                    .buttonStyle(.borderless)
                     .disabled(rows.count <= 1)
                 }
             }
