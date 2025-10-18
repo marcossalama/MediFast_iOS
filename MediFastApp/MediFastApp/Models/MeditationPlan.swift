@@ -5,12 +5,20 @@ import Foundation
 struct MeditationPlan: Codable, Equatable {
     var sessionsMinutes: [Int] // e.g. [10, 10, 5]
     var warmupSeconds: Int?    // optional warm-up before the first session only
+    var midpointIntervalMinutes: Int? // optional midpoint bell cadence
     var vibrateAfterSession: Bool // optional feedback toggle
     var dingAfterSession: Bool    // optional feedback toggle
 
-    init(sessionsMinutes: [Int], warmupSeconds: Int?, vibrateAfterSession: Bool = false, dingAfterSession: Bool = false) {
+    init(
+        sessionsMinutes: [Int],
+        warmupSeconds: Int?,
+        midpointIntervalMinutes: Int? = nil,
+        vibrateAfterSession: Bool = false,
+        dingAfterSession: Bool = false
+    ) {
         self.sessionsMinutes = MeditationPlan.clamped(sessionsMinutes)
         self.warmupSeconds = warmupSeconds
+        self.midpointIntervalMinutes = MeditationPlan.normalizedMidpoint(midpointIntervalMinutes)
         self.vibrateAfterSession = vibrateAfterSession
         self.dingAfterSession = dingAfterSession
     }
@@ -19,8 +27,12 @@ struct MeditationPlan: Codable, Equatable {
         let limited = Array(values.prefix(9))
         return limited.map { min(59, max(1, $0)) }
     }
+    static func normalizedMidpoint(_ value: Int?) -> Int? {
+        guard let value, value > 0 else { return nil }
+        return min(59, value)
+    }
     private enum CodingKeys: String, CodingKey {
-        case sessionsMinutes, warmupSeconds, vibrateAfterSession, dingAfterSession
+        case sessionsMinutes, warmupSeconds, midpointIntervalMinutes, vibrateAfterSession, dingAfterSession
     }
 
     // Backward-compatible decode: default toggles to false if absent
@@ -29,6 +41,7 @@ struct MeditationPlan: Codable, Equatable {
         let minutes = try c.decode([Int].self, forKey: .sessionsMinutes)
         self.sessionsMinutes = MeditationPlan.clamped(minutes)
         self.warmupSeconds = try? c.decode(Int.self, forKey: .warmupSeconds)
+        self.midpointIntervalMinutes = MeditationPlan.normalizedMidpoint(try? c.decode(Int.self, forKey: .midpointIntervalMinutes))
         self.vibrateAfterSession = (try? c.decode(Bool.self, forKey: .vibrateAfterSession)) ?? false
         self.dingAfterSession = (try? c.decode(Bool.self, forKey: .dingAfterSession)) ?? false
     }

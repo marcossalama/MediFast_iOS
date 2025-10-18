@@ -12,6 +12,7 @@ struct MeditationView: View {
     @State private var goFocus: Bool = false
     @State private var vibrateAfterSession: Bool = false
     @State private var dingAfterSession: Bool = false
+    @State private var midpointInterval: Int? = nil
     private let storage: StorageProtocol = UserDefaultsStorage()
 
     var body: some View {
@@ -100,9 +101,11 @@ struct MeditationView: View {
                 warmup = plan.warmupSeconds ?? 0
                 vibrateAfterSession = plan.vibrateAfterSession
                 dingAfterSession = plan.dingAfterSession
+                midpointInterval = plan.midpointIntervalMinutes
             } else {
                 rows = [SessionRow(id: UUID(), minutes: max(1, viewModel.selectedMinutes))]
                 warmup = viewModel.warmupSeconds ?? 0
+                midpointInterval = viewModel.plan.midpointIntervalMinutes
             }
         }
         .accessibilityLabel("Meditation Home")
@@ -112,6 +115,7 @@ struct MeditationView: View {
                     let plan = MeditationPlan(
                         sessionsMinutes: rows.map { $0.minutes },
                         warmupSeconds: warmup == 0 ? nil : warmup,
+                        midpointIntervalMinutes: midpointInterval,
                         vibrateAfterSession: vibrateAfterSession,
                         dingAfterSession: dingAfterSession
                     )
