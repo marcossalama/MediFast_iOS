@@ -15,6 +15,29 @@ struct MeditationView: View {
     @State private var midpointInterval: Int? = nil
     private let storage: StorageProtocol = UserDefaultsStorage()
 
+    private var midpointEnabledBinding: Binding<Bool> {
+        Binding(
+            get: { midpointInterval != nil },
+            set: { isOn in
+                if isOn {
+                    let current = midpointInterval ?? 5
+                    midpointInterval = min(59, max(1, current))
+                } else {
+                    midpointInterval = nil
+                }
+            }
+        )
+    }
+
+    private var midpointIntervalStepperBinding: Binding<Int> {
+        Binding(
+            get: { midpointInterval ?? 5 },
+            set: { value in
+                midpointInterval = min(59, max(1, value))
+            }
+        )
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -58,28 +81,34 @@ struct MeditationView: View {
                 }
                 .cardPadding()
 
-                Text("Feedback").sectionStyle().cardPadding()
+                Text("Cues & Feedback").sectionStyle().cardPadding()
                 Card {
-                    Toggle(isOn: $vibrateAfterSession) {
-                        Label("Vibrate after session", systemImage: "waveform")
-                    }
-                    Divider()
-                    Toggle(isOn: $dingAfterSession) {
-                        Label("Ding after session", systemImage: "bell")
-                    }
-                }
-                .cardPadding()
-
-                Text("Warm-up").sectionStyle().cardPadding()
-                Card {
-                    HStack {
-                        Text("Warm-up: \(warmup) s")
-                        Spacer()
-                        HStack(spacing: 8) {
-                            Button { warmup = max(0, warmup - 5); Haptics.impact(.light) } label: { Image(systemName: "minus") }
-                                .buttonStyle(IconPillButtonStyle())
-                            Button { warmup = min(15, warmup + 5); Haptics.impact(.light) } label: { Image(systemName: "plus") }
-                                .buttonStyle(IconPillButtonStyle())
+                    VStack(alignment: .leading, spacing: 16) {
+                        Toggle(isOn: $vibrateAfterSession) {
+                            Label("Vibrate after session", systemImage: "waveform")
+                        }
+                        Toggle(isOn: $dingAfterSession) {
+                            Label("Ding after session", systemImage: "bell")
+                        }
+                        Divider()
+                        Stepper(
+                            "Warm-up: \(warmup) s",
+                            value: $warmup,
+                            in: 0...15,
+                            step: 5
+                        )
+                        .accessibilityLabel("Warm-up \(warmup) seconds")
+                        Divider()
+                        Toggle(isOn: midpointEnabledBinding) {
+                            Label("Midpoint bell", systemImage: "bell.badge")
+                        }
+                        if midpointInterval != nil {
+                            Stepper(
+                                "Every \(midpointInterval ?? 5) min",
+                                value: midpointIntervalStepperBinding,
+                                in: 1...59
+                            )
+                            .accessibilityLabel("Midpoint bell every \(midpointInterval ?? 5) minutes")
                         }
                     }
                 }
@@ -98,17 +127,24 @@ struct MeditationView: View {
             if let plan: MeditationPlan = try? storage.load(MeditationPlan.self, forKey: UDKeys.meditationPlan) {
                 let mins = plan.sessionsMinutes.isEmpty ? [10] : plan.sessionsMinutes
                 rows = mins.map { SessionRow(id: UUID(), minutes: min(59, max(1, $0))) }
-                warmup = plan.warmupSeconds ?? 0
+                warmup = min(15, max(0, plan.warmupSeconds ?? 0))
                 vibrateAfterSession = plan.vibrateAfterSession
                 dingAfterSession = plan.dingAfterSession
-                midpointInterval = plan.midpointIntervalMinutes
+                midpointInterval = plan.midpointIntervalMinutes.map { min(59, max(1, $0)) }
             } else {
                 rows = [SessionRow(id: UUID(), minutes: max(1, viewModel.selectedMinutes))]
-                warmup = viewModel.warmupSeconds ?? 0
-                midpointInterval = viewModel.plan.midpointIntervalMinutes
+                warmup = min(15, max(0, viewModel.warmupSeconds ?? 0))
+                midpointInterval = viewModel.plan.midpointIntervalMinutes.map { min(59, max(1, $0)) }
             }
         }
         .accessibilityLabel("Meditation Home")
+        .onChange(of: warmup, initial: false) { _, _ in
+            // Provide light feedback when adjusting warm-up length.
+            Haptics.impact(.light)
+        }
+        .onChange(of: midpointInterval, initial: false) { _, _ in
+            Haptics.impact(.light)
+        }
         .safeAreaInset(edge: .bottom) {
             HStack {
                 Button {

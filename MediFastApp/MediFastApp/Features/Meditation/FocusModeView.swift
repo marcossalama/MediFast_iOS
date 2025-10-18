@@ -33,10 +33,14 @@ struct FocusModeView: View {
                 .padding(.top, 12)
             }
             .toolbar { ToolbarItem(placement: .navigationBarTrailing) { Button { viewModel.cancel(); dismiss() } label: { Image(systemName: "xmark.circle.fill") } } }
-            .onChange(of: scenePhase) { _, newPhase in if newPhase != .active { viewModel.tick(isActive: false) } }
+            .onChange(of: scenePhase) { _, newPhase in
+                if newPhase != .active {
+                    viewModel.tick(at: Date(), isActive: false)
+                }
+            }
             .onAppear { setIdleDisabled(true) }
             .onDisappear { setIdleDisabled(false) }
-            .task(id: context.date) { viewModel.tick(isActive: scenePhase == .active) }
+            .task(id: context.date) { viewModel.tick(at: context.date, isActive: scenePhase == .active) }
             .accessibilityLabel("Meditation Focus Mode")
         }
     }

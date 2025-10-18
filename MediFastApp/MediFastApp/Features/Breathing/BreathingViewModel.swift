@@ -86,9 +86,10 @@ final class BreathingViewModel: ObservableObject {
 extension BreathingViewModel {
     func handleSingleTap() {
         guard phase == .breathing else { return }
-        // Manual tap still increments, independent of auto pace
+        // Manual taps respect the configured round size to keep history accurate.
+        guard breathCount < settings.breathsPerRound else { return }
         breathCount += 1
-        if breathCount >= settings.breathsPerRound { Haptics.impact(.soft) }
+        if breathCount == settings.breathsPerRound { Haptics.impact(.soft) }
     }
 
     func handleDoubleTap() {

@@ -16,10 +16,10 @@ struct FastingView: View {
                                     .font(Theme.Typography.numeric)
                                     .frame(maxWidth: .infinity)
                                 if viewModel.isActive {
-                                    Button { viewModel.stopFast(); Haptics.notify(.success) } label: { Text("Stop Fast").frame(maxWidth: .infinity) }
+                                    Button { viewModel.stopFast() } label: { Text("Stop Fast").frame(maxWidth: .infinity) }
                                         .buttonStyle(PrimaryButtonStyle())
                                 } else {
-                                    Button { viewModel.startFast(); Haptics.impact(.medium) } label: { Text("Start Fast").frame(maxWidth: .infinity) }
+                                    Button { viewModel.startFast() } label: { Text("Start Fast").frame(maxWidth: .infinity) }
                                         .buttonStyle(PrimaryButtonStyle())
                                 }
                             }
