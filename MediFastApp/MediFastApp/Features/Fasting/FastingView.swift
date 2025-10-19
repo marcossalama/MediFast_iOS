@@ -25,35 +25,6 @@ struct FastingView: View {
                             }
                         }.cardPadding()
 
-                        Text("Last 3 Fasts").sectionStyle().cardPadding()
-                        Card {
-                            VStack(alignment: .leading, spacing: 12) {
-                                if lastThreeFasts.isEmpty {
-                                    HistoryEmptyState()
-                                } else {
-                                    ForEach(lastThreeFasts) { fast in
-                                        HistoryRow(fast: fast, onDelete: {
-                                            withAnimation {
-                                                viewModel.deleteFast(fast)
-                                            }
-                                        })
-                                        .swipeActions(allowsFullSwipe: true) {
-                                            Button(role: .destructive) {
-                                                withAnimation {
-                                                    viewModel.deleteFast(fast)
-                                                }
-                                            } label: {
-                                                Label("Delete", systemImage: "trash")
-                                            }
-                                        }
-                                        if fast.id != lastThreeFasts.last?.id {
-                                            Divider()
-                                        }
-                                    }
-                                }
-                            }
-                        }.cardPadding()
-
                         Text("History").sectionStyle().cardPadding()
                         Card {
                             VStack(alignment: .leading, spacing: 12) {
@@ -107,62 +78,10 @@ struct FastingView: View {
         }
     }
 
-    private var lastThreeFasts: [Fast] { viewModel.lastThreeFasts }
     private var fullHistory: [Fast] { viewModel.history }
-
-    private func formattedDuration(_ seconds: TimeInterval?) -> String? {
-        guard let seconds else { return nil }
-        return TimeFormatter.hms(seconds)
-    }
 }
 
 #Preview { NavigationStack { FastingView() } }
-
-private struct FastingStatTile: View {
-    var title: String
-    var value: String
-    var caption: String?
-    var systemImage: String
-    var valueFont: Font = .system(size: 30, weight: .semibold, design: .rounded).monospacedDigit()
-
-    init(
-        title: String,
-        systemImage: String,
-        value: String,
-        caption: String? = nil,
-        valueFont: Font = .system(size: 30, weight: .semibold, design: .rounded).monospacedDigit()
-    ) {
-        self.title = title
-        self.systemImage = systemImage
-        self.value = value
-        self.caption = caption
-        self.valueFont = valueFont
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Label(title, systemImage: systemImage)
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.secondary)
-            Text(value)
-                .font(valueFont)
-                .minimumScaleFactor(0.8)
-            if let caption, !caption.isEmpty {
-                Text(caption)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Theme.background)
-        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous)
-                .stroke(Color.secondary.opacity(0.12))
-        )
-    }
-}
 
 private struct HistoryRow: View {
     var fast: Fast

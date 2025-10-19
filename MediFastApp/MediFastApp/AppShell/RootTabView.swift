@@ -5,28 +5,36 @@ struct RootTabView: View {
         ZStack {
             Theme.background.ignoresSafeArea()
             TabView {
-            NavigationStack {
-                MeditationView()
-            }
+                NavigationStack {
+                    MeditationView()
+                }
                 .tabItem {
                     Image(systemName: "leaf")
                     Text("Meditate")
                 }
 
-            NavigationStack {
-                BreathingSetupView()
-            }
+                NavigationStack {
+                    BreathingSetupView()
+                }
                 .tabItem {
                     Image(systemName: "wind")
                     Text("Breathe")
                 }
 
-            NavigationStack {
-                FastingView()
-            }
+                NavigationStack {
+                    FastingView()
+                }
                 .tabItem {
                     Image(systemName: "hourglass")
                     Text("Fast")
+                }
+
+                NavigationStack {
+                    ProfileView()
+                }
+                .tabItem {
+                    Image(systemName: "person.crop.circle")
+                    Text("Profile")
                 }
             }
         }

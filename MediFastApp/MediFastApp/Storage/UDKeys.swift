@@ -15,4 +15,7 @@ enum UDKeys {
     // Breathing
     static let breathingSettings = "breathing.settings.v1" // BreathingSettings
     static let breathingHistory = "breathing.history.v1"  // [BreathingRoundResult] (optional)
+
+    // Profile
+    static let userProfile = "profile.user.v1" // UserProfile
 }

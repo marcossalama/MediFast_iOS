@@ -35,11 +35,6 @@ final class FastingViewModel: ObservableObject {
         history.max(by: { ($0.duration ?? 0) < ($1.duration ?? 0) })
     }
 
-    /// Three most recent completed fasts.
-    var lastThreeFasts: [Fast] {
-        Array(history.prefix(3))
-    }
-
     /// 7-day average duration (seconds) of completed fasts.
     var sevenDayAverage: TimeInterval? {
         let cutoff = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date().addingTimeInterval(-7*86400)

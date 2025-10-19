@@ -41,6 +41,9 @@ objects = {
         AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002C2F00000000000001 /* ButtonStyles.swift */; };
         AAB1002D2F00000000000001 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002D2F00000000000001 /* Appearance.swift */; };
         AAB1002E2F00000000000001 /* RingProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002E2F00000000000001 /* RingProgress.swift */; };
+        AAB200012F00000000000001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200012F00000000000001 /* ProfileView.swift */; };
+        AAB200022F00000000000001 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200022F00000000000001 /* ProfileViewModel.swift */; };
+        AAB200032F00000000000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200032F00000000000001 /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,10 +75,13 @@ objects = {
         AAF100062F00000000000001 /* FastingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingView.swift; path = MediFastApp/Features/Fasting/FastingView.swift; sourceTree = SOURCE_ROOT; };
         AAF100072F00000000000001 /* FastHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastHistoryView.swift; path = MediFastApp/Features/Fasting/FastHistoryView.swift; sourceTree = SOURCE_ROOT; };
         AAF100082F00000000000001 /* FastingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingViewModel.swift; path = MediFastApp/Features/Fasting/FastingViewModel.swift; sourceTree = SOURCE_ROOT; };
+        AAF200012F00000000000001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = MediFastApp/Features/Profile/ProfileView.swift; sourceTree = SOURCE_ROOT; };
+        AAF200022F00000000000001 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = MediFastApp/Features/Profile/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
         AAF100092F00000000000001 /* MeditationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationSettings.swift; path = MediFastApp/Models/MeditationSettings.swift; sourceTree = SOURCE_ROOT; };
         AAF1000A2F00000000000001 /* MeditationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationSession.swift; path = MediFastApp/Models/MeditationSession.swift; sourceTree = SOURCE_ROOT; };
         AAF1000B2F00000000000001 /* StreaksState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StreaksState.swift; path = MediFastApp/Models/StreaksState.swift; sourceTree = SOURCE_ROOT; };
         AAF1000C2F00000000000001 /* Fast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Fast.swift; path = MediFastApp/Models/Fast.swift; sourceTree = SOURCE_ROOT; };
+        AAF200032F00000000000001 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserProfile.swift; path = MediFastApp/Models/UserProfile.swift; sourceTree = SOURCE_ROOT; };
         AAF1000D2F00000000000001 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageProtocol.swift; path = MediFastApp/Storage/StorageProtocol.swift; sourceTree = SOURCE_ROOT; };
         AAF1000E2F00000000000001 /* UDKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UDKeys.swift; path = MediFastApp/Storage/UDKeys.swift; sourceTree = SOURCE_ROOT; };
         AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsStorage.swift; path = MediFastApp/Storage/UserDefaultsStorage.swift; sourceTree = SOURCE_ROOT; };
@@ -247,10 +253,13 @@ objects = {
 					AAF100062F00000000000001 /* FastingView.swift */,
 					AAF100072F00000000000001 /* FastHistoryView.swift */,
 					AAF100082F00000000000001 /* FastingViewModel.swift */,
+					AAF200012F00000000000001 /* ProfileView.swift */,
+					AAF200022F00000000000001 /* ProfileViewModel.swift */,
 					AAF100092F00000000000001 /* MeditationSettings.swift */,
 					AAF1000A2F00000000000001 /* MeditationSession.swift */,
 					AAF1000B2F00000000000001 /* StreaksState.swift */,
 					AAF1000C2F00000000000001 /* Fast.swift */,
+					AAF200032F00000000000001 /* UserProfile.swift */,
 					AAF1000D2F00000000000001 /* StorageProtocol.swift */,
 					AAF1000E2F00000000000001 /* UDKeys.swift */,
 					AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */,
@@ -367,6 +376,9 @@ objects = {
                 AAB100292F00000000000001 /* MeditationPlan.swift in Sources */,
                 AAB1002E2F00000000000001 /* RingProgress.swift in Sources */,
                 AAB1002D2F00000000000001 /* Appearance.swift in Sources */,
+                AAB200012F00000000000001 /* ProfileView.swift in Sources */,
+                AAB200022F00000000000001 /* ProfileViewModel.swift in Sources */,
+                AAB200032F00000000000001 /* UserProfile.swift in Sources */,
             );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
