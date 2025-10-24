@@ -4,46 +4,46 @@
 	classes = {
 	};
 	objectVersion = 77;
-objects = {
+	objects = {
 
 /* Begin PBXBuildFile section */
-        AAB100012F00000000000001 /* MediFastAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100012F00000000000001 /* MediFastAppApp.swift */; };
-        AAB100022F00000000000001 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100022F00000000000001 /* RootTabView.swift */; };
-        AAB100032F00000000000001 /* MeditationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100032F00000000000001 /* MeditationView.swift */; };
-        AAB100042F00000000000001 /* MeditationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100042F00000000000001 /* MeditationViewModel.swift */; };
-        AAB100052F00000000000001 /* FocusModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100052F00000000000001 /* FocusModeView.swift */; };
-        AAB100062F00000000000001 /* FastingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100062F00000000000001 /* FastingView.swift */; };
-        AAB100072F00000000000001 /* FastHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100072F00000000000001 /* FastHistoryView.swift */; };
-        AAB100082F00000000000001 /* FastingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100082F00000000000001 /* FastingViewModel.swift */; };
-        AAB100092F00000000000001 /* MeditationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100092F00000000000001 /* MeditationSettings.swift */; };
-        AAB1000A2F00000000000001 /* MeditationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000A2F00000000000001 /* MeditationSession.swift */; };
-        AAB1000B2F00000000000001 /* StreaksState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000B2F00000000000001 /* StreaksState.swift */; };
-        AAB1000C2F00000000000001 /* Fast.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000C2F00000000000001 /* Fast.swift */; };
-        AAB1000D2F00000000000001 /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000D2F00000000000001 /* StorageProtocol.swift */; };
-        AAB1000E2F00000000000001 /* UDKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000E2F00000000000001 /* UDKeys.swift */; };
-        AAB1000F2F00000000000001 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */; };
-        AAB100102F00000000000001 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100102F00000000000001 /* Haptics.swift */; };
-        AAB100112F00000000000001 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100112F00000000000001 /* AudioPlayer.swift */; };
-        AAB100122F00000000000001 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100122F00000000000001 /* TimeFormatter.swift */; };
-        AAB100132F00000000000001 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100132F00000000000001 /* Sounds.swift */; };
-        AAB100142F00000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAF100142F00000000000001 /* Assets.xcassets */; };
-        AAB100202F00000000000001 /* MediFastAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100202F00000000000001 /* MediFastAppTests.swift */; };
-        AAB100212F00000000000001 /* TimeMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100212F00000000000001 /* TimeMathTests.swift */; };
-        AAB100232F00000000000001 /* BreathingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100232F00000000000001 /* BreathingSetupView.swift */; };
-        AAB100242F00000000000001 /* BreathingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100242F00000000000001 /* BreathingSessionView.swift */; };
-        AAB100252F00000000000001 /* BreathingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100252F00000000000001 /* BreathingViewModel.swift */; };
-        AAB100262F00000000000001 /* BreathingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100262F00000000000001 /* BreathingSettings.swift */; };
-        AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100272F00000000000001 /* BreathingRoundResult.swift */; };
-        AAB100282F00000000000001 /* BreathingResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100282F00000000000001 /* BreathingResultsView.swift */; };
-        AAB100292F00000000000001 /* MeditationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100292F00000000000001 /* MeditationPlan.swift */; };
-        AAB1002A2F00000000000001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002A2F00000000000001 /* Theme.swift */; };
-        AAB1002B2F00000000000001 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002B2F00000000000001 /* Card.swift */; };
-        AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002C2F00000000000001 /* ButtonStyles.swift */; };
-        AAB1002D2F00000000000001 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002D2F00000000000001 /* Appearance.swift */; };
-        AAB1002E2F00000000000001 /* RingProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002E2F00000000000001 /* RingProgress.swift */; };
-        AAB200012F00000000000001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200012F00000000000001 /* ProfileView.swift */; };
-        AAB200022F00000000000001 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200022F00000000000001 /* ProfileViewModel.swift */; };
-        AAB200032F00000000000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200032F00000000000001 /* UserProfile.swift */; };
+		AAB100012F00000000000001 /* MediFastAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100012F00000000000001 /* MediFastAppApp.swift */; };
+		AAB100022F00000000000001 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100022F00000000000001 /* RootTabView.swift */; };
+		AAB100032F00000000000001 /* MeditationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100032F00000000000001 /* MeditationView.swift */; };
+		AAB100042F00000000000001 /* MeditationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100042F00000000000001 /* MeditationViewModel.swift */; };
+		AAB100052F00000000000001 /* FocusModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100052F00000000000001 /* FocusModeView.swift */; };
+		AAB100062F00000000000001 /* FastingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100062F00000000000001 /* FastingView.swift */; };
+		AAB100072F00000000000001 /* FastHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100072F00000000000001 /* FastHistoryView.swift */; };
+		AAB100082F00000000000001 /* FastingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100082F00000000000001 /* FastingViewModel.swift */; };
+		AAB100092F00000000000001 /* MeditationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100092F00000000000001 /* MeditationSettings.swift */; };
+		AAB1000A2F00000000000001 /* MeditationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000A2F00000000000001 /* MeditationSession.swift */; };
+		AAB1000B2F00000000000001 /* StreaksState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000B2F00000000000001 /* StreaksState.swift */; };
+		AAB1000C2F00000000000001 /* Fast.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000C2F00000000000001 /* Fast.swift */; };
+		AAB1000D2F00000000000001 /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000D2F00000000000001 /* StorageProtocol.swift */; };
+		AAB1000E2F00000000000001 /* UDKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000E2F00000000000001 /* UDKeys.swift */; };
+		AAB1000F2F00000000000001 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */; };
+		AAB100102F00000000000001 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100102F00000000000001 /* Haptics.swift */; };
+		AAB100112F00000000000001 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100112F00000000000001 /* AudioPlayer.swift */; };
+		AAB100122F00000000000001 /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100122F00000000000001 /* TimeFormatter.swift */; };
+		AAB100132F00000000000001 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100132F00000000000001 /* Sounds.swift */; };
+		AAB100142F00000000000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAF100142F00000000000001 /* Assets.xcassets */; };
+		AAB100202F00000000000001 /* MediFastAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100202F00000000000001 /* MediFastAppTests.swift */; };
+		AAB100212F00000000000001 /* TimeMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100212F00000000000001 /* TimeMathTests.swift */; };
+		AAB100232F00000000000001 /* BreathingSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100232F00000000000001 /* BreathingSetupView.swift */; };
+		AAB100242F00000000000001 /* BreathingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100242F00000000000001 /* BreathingSessionView.swift */; };
+		AAB100252F00000000000001 /* BreathingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100252F00000000000001 /* BreathingViewModel.swift */; };
+		AAB100262F00000000000001 /* BreathingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100262F00000000000001 /* BreathingSettings.swift */; };
+		AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100272F00000000000001 /* BreathingRoundResult.swift */; };
+		AAB100282F00000000000001 /* BreathingResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100282F00000000000001 /* BreathingResultsView.swift */; };
+		AAB100292F00000000000001 /* MeditationPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100292F00000000000001 /* MeditationPlan.swift */; };
+		AAB1002A2F00000000000001 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002A2F00000000000001 /* Theme.swift */; };
+		AAB1002B2F00000000000001 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002B2F00000000000001 /* Card.swift */; };
+		AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002C2F00000000000001 /* ButtonStyles.swift */; };
+		AAB1002D2F00000000000001 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002D2F00000000000001 /* Appearance.swift */; };
+		AAB1002E2F00000000000001 /* RingProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002E2F00000000000001 /* RingProgress.swift */; };
+		AAB200012F00000000000001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200012F00000000000001 /* ProfileView.swift */; };
+		AAB200022F00000000000001 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200022F00000000000001 /* ProfileViewModel.swift */; };
+		AAB200032F00000000000001 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF200032F00000000000001 /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,50 +64,47 @@ objects = {
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-			32F42D7F2E64C8230037024A /* MediFastApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediFastApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-			32F42D8D2E64C8240037024A /* MediFastAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediFastAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-			32F42D972E64C8240037024A /* MediFastAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediFastAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-        AAF100012F00000000000001 /* MediFastAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediFastAppApp.swift; path = MediFastApp/MediFastAppApp.swift; sourceTree = SOURCE_ROOT; };
-        AAF100022F00000000000001 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RootTabView.swift; path = MediFastApp/AppShell/RootTabView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100032F00000000000001 /* MeditationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationView.swift; path = MediFastApp/Features/Meditation/MeditationView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100042F00000000000001 /* MeditationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationViewModel.swift; path = MediFastApp/Features/Meditation/MeditationViewModel.swift; sourceTree = SOURCE_ROOT; };
-        AAF100052F00000000000001 /* FocusModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FocusModeView.swift; path = MediFastApp/Features/Meditation/FocusModeView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100062F00000000000001 /* FastingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingView.swift; path = MediFastApp/Features/Fasting/FastingView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100072F00000000000001 /* FastHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastHistoryView.swift; path = MediFastApp/Features/Fasting/FastHistoryView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100082F00000000000001 /* FastingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingViewModel.swift; path = MediFastApp/Features/Fasting/FastingViewModel.swift; sourceTree = SOURCE_ROOT; };
-        AAF200012F00000000000001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = MediFastApp/Features/Profile/ProfileView.swift; sourceTree = SOURCE_ROOT; };
-        AAF200022F00000000000001 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = MediFastApp/Features/Profile/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
-        AAF100092F00000000000001 /* MeditationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationSettings.swift; path = MediFastApp/Models/MeditationSettings.swift; sourceTree = SOURCE_ROOT; };
-        AAF1000A2F00000000000001 /* MeditationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationSession.swift; path = MediFastApp/Models/MeditationSession.swift; sourceTree = SOURCE_ROOT; };
-        AAF1000B2F00000000000001 /* StreaksState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StreaksState.swift; path = MediFastApp/Models/StreaksState.swift; sourceTree = SOURCE_ROOT; };
-        AAF1000C2F00000000000001 /* Fast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Fast.swift; path = MediFastApp/Models/Fast.swift; sourceTree = SOURCE_ROOT; };
-        AAF200032F00000000000001 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserProfile.swift; path = MediFastApp/Models/UserProfile.swift; sourceTree = SOURCE_ROOT; };
-        AAF1000D2F00000000000001 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageProtocol.swift; path = MediFastApp/Storage/StorageProtocol.swift; sourceTree = SOURCE_ROOT; };
-        AAF1000E2F00000000000001 /* UDKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UDKeys.swift; path = MediFastApp/Storage/UDKeys.swift; sourceTree = SOURCE_ROOT; };
-        AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsStorage.swift; path = MediFastApp/Storage/UserDefaultsStorage.swift; sourceTree = SOURCE_ROOT; };
-        AAF100102F00000000000001 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Haptics.swift; path = MediFastApp/Shared/Haptics.swift; sourceTree = SOURCE_ROOT; };
-        AAF100112F00000000000001 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = MediFastApp/Shared/AudioPlayer.swift; sourceTree = SOURCE_ROOT; };
-        AAF100122F00000000000001 /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeFormatter.swift; path = MediFastApp/Shared/TimeFormatter.swift; sourceTree = SOURCE_ROOT; };
-        AAF100132F00000000000001 /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Sounds.swift; path = MediFastApp/Shared/Sounds.swift; sourceTree = SOURCE_ROOT; };
-        AAF100142F00000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = MediFastApp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
-        AAF100202F00000000000001 /* MediFastAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediFastAppTests.swift; path = MediFastAppTests/MediFastAppTests.swift; sourceTree = SOURCE_ROOT; };
-        AAF100212F00000000000001 /* TimeMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeMathTests.swift; path = MediFastAppTests/TimeMathTests.swift; sourceTree = SOURCE_ROOT; };
-        AAF100232F00000000000001 /* BreathingSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSetupView.swift; path = MediFastApp/Features/Breathing/BreathingSetupView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100242F00000000000001 /* BreathingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSessionView.swift; path = MediFastApp/Features/Breathing/BreathingSessionView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100252F00000000000001 /* BreathingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingViewModel.swift; path = MediFastApp/Features/Breathing/BreathingViewModel.swift; sourceTree = SOURCE_ROOT; };
-        AAF100262F00000000000001 /* BreathingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSettings.swift; path = MediFastApp/Models/BreathingSettings.swift; sourceTree = SOURCE_ROOT; };
-        AAF100272F00000000000001 /* BreathingRoundResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingRoundResult.swift; path = MediFastApp/Models/BreathingRoundResult.swift; sourceTree = SOURCE_ROOT; };
-        AAF100282F00000000000001 /* BreathingResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingResultsView.swift; path = MediFastApp/Features/Breathing/BreathingResultsView.swift; sourceTree = SOURCE_ROOT; };
-        AAF100292F00000000000001 /* MeditationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationPlan.swift; path = MediFastApp/Models/MeditationPlan.swift; sourceTree = SOURCE_ROOT; };
-        AAF1002A2F00000000000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = MediFastApp/Shared/Design/Theme.swift; sourceTree = SOURCE_ROOT; };
-        AAF1002B2F00000000000001 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Card.swift; path = MediFastApp/Shared/Design/Card.swift; sourceTree = SOURCE_ROOT; };
-        AAF1002C2F00000000000001 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonStyles.swift; path = MediFastApp/Shared/Design/ButtonStyles.swift; sourceTree = SOURCE_ROOT; };
-        AAF1002D2F00000000000001 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = MediFastApp/Shared/Design/Appearance.swift; sourceTree = SOURCE_ROOT; };
-        AAF1002E2F00000000000001 /* RingProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RingProgress.swift; path = MediFastApp/Shared/Design/RingProgress.swift; sourceTree = SOURCE_ROOT; };
+		32F42D7F2E64C8230037024A /* MediFastApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediFastApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32F42D8D2E64C8240037024A /* MediFastAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediFastAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		32F42D972E64C8240037024A /* MediFastAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediFastAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAF100012F00000000000001 /* MediFastAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediFastAppApp.swift; path = MediFastApp/MediFastAppApp.swift; sourceTree = SOURCE_ROOT; };
+		AAF100022F00000000000001 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RootTabView.swift; path = MediFastApp/AppShell/RootTabView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100032F00000000000001 /* MeditationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationView.swift; path = MediFastApp/Features/Meditation/MeditationView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100042F00000000000001 /* MeditationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationViewModel.swift; path = MediFastApp/Features/Meditation/MeditationViewModel.swift; sourceTree = SOURCE_ROOT; };
+		AAF100052F00000000000001 /* FocusModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FocusModeView.swift; path = MediFastApp/Features/Meditation/FocusModeView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100062F00000000000001 /* FastingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingView.swift; path = MediFastApp/Features/Fasting/FastingView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100072F00000000000001 /* FastHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastHistoryView.swift; path = MediFastApp/Features/Fasting/FastHistoryView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100082F00000000000001 /* FastingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingViewModel.swift; path = MediFastApp/Features/Fasting/FastingViewModel.swift; sourceTree = SOURCE_ROOT; };
+		AAF100092F00000000000001 /* MeditationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationSettings.swift; path = MediFastApp/Models/MeditationSettings.swift; sourceTree = SOURCE_ROOT; };
+		AAF1000A2F00000000000001 /* MeditationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationSession.swift; path = MediFastApp/Models/MeditationSession.swift; sourceTree = SOURCE_ROOT; };
+		AAF1000B2F00000000000001 /* StreaksState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StreaksState.swift; path = MediFastApp/Models/StreaksState.swift; sourceTree = SOURCE_ROOT; };
+		AAF1000C2F00000000000001 /* Fast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Fast.swift; path = MediFastApp/Models/Fast.swift; sourceTree = SOURCE_ROOT; };
+		AAF1000D2F00000000000001 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageProtocol.swift; path = MediFastApp/Storage/StorageProtocol.swift; sourceTree = SOURCE_ROOT; };
+		AAF1000E2F00000000000001 /* UDKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UDKeys.swift; path = MediFastApp/Storage/UDKeys.swift; sourceTree = SOURCE_ROOT; };
+		AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserDefaultsStorage.swift; path = MediFastApp/Storage/UserDefaultsStorage.swift; sourceTree = SOURCE_ROOT; };
+		AAF100102F00000000000001 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Haptics.swift; path = MediFastApp/Shared/Haptics.swift; sourceTree = SOURCE_ROOT; };
+		AAF100112F00000000000001 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AudioPlayer.swift; path = MediFastApp/Shared/AudioPlayer.swift; sourceTree = SOURCE_ROOT; };
+		AAF100122F00000000000001 /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeFormatter.swift; path = MediFastApp/Shared/TimeFormatter.swift; sourceTree = SOURCE_ROOT; };
+		AAF100132F00000000000001 /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Sounds.swift; path = MediFastApp/Shared/Sounds.swift; sourceTree = SOURCE_ROOT; };
+		AAF100142F00000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = MediFastApp/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		AAF100202F00000000000001 /* MediFastAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediFastAppTests.swift; path = MediFastAppTests/MediFastAppTests.swift; sourceTree = SOURCE_ROOT; };
+		AAF100212F00000000000001 /* TimeMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TimeMathTests.swift; path = MediFastAppTests/TimeMathTests.swift; sourceTree = SOURCE_ROOT; };
+		AAF100232F00000000000001 /* BreathingSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSetupView.swift; path = MediFastApp/Features/Breathing/BreathingSetupView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100242F00000000000001 /* BreathingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSessionView.swift; path = MediFastApp/Features/Breathing/BreathingSessionView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100252F00000000000001 /* BreathingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingViewModel.swift; path = MediFastApp/Features/Breathing/BreathingViewModel.swift; sourceTree = SOURCE_ROOT; };
+		AAF100262F00000000000001 /* BreathingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingSettings.swift; path = MediFastApp/Models/BreathingSettings.swift; sourceTree = SOURCE_ROOT; };
+		AAF100272F00000000000001 /* BreathingRoundResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingRoundResult.swift; path = MediFastApp/Models/BreathingRoundResult.swift; sourceTree = SOURCE_ROOT; };
+		AAF100282F00000000000001 /* BreathingResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BreathingResultsView.swift; path = MediFastApp/Features/Breathing/BreathingResultsView.swift; sourceTree = SOURCE_ROOT; };
+		AAF100292F00000000000001 /* MeditationPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationPlan.swift; path = MediFastApp/Models/MeditationPlan.swift; sourceTree = SOURCE_ROOT; };
+		AAF1002A2F00000000000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = MediFastApp/Shared/Design/Theme.swift; sourceTree = SOURCE_ROOT; };
+		AAF1002B2F00000000000001 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Card.swift; path = MediFastApp/Shared/Design/Card.swift; sourceTree = SOURCE_ROOT; };
+		AAF1002C2F00000000000001 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonStyles.swift; path = MediFastApp/Shared/Design/ButtonStyles.swift; sourceTree = SOURCE_ROOT; };
+		AAF1002D2F00000000000001 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Appearance.swift; path = MediFastApp/Shared/Design/Appearance.swift; sourceTree = SOURCE_ROOT; };
+		AAF1002E2F00000000000001 /* RingProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RingProgress.swift; path = MediFastApp/Shared/Design/RingProgress.swift; sourceTree = SOURCE_ROOT; };
+		AAF200012F00000000000001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = MediFastApp/Features/Profile/ProfileView.swift; sourceTree = SOURCE_ROOT; };
+		AAF200022F00000000000001 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewModel.swift; path = MediFastApp/Features/Profile/ProfileViewModel.swift; sourceTree = SOURCE_ROOT; };
+		AAF200032F00000000000001 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserProfile.swift; path = MediFastApp/Models/UserProfile.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		32F42D7C2E64C8230037024A /* Frameworks */ = {
@@ -134,17 +131,60 @@ objects = {
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		32F42D762E64C8230037024A = {
+		324AE29B2EAC1BAE00B76476 /* Recovered References */ = {
 			isa = PBXGroup;
-					children = (
-						AAG100012F00000000000001 /* AppClassic */,
-						AAG100022F00000000000001 /* TestsClassic */,
-						32F42D802E64C8230037024A /* Products */,
-					);
+			children = (
+				AAF100012F00000000000001 /* MediFastAppApp.swift */,
+				AAF100022F00000000000001 /* RootTabView.swift */,
+				AAF100032F00000000000001 /* MeditationView.swift */,
+				AAF100042F00000000000001 /* MeditationViewModel.swift */,
+				AAF100052F00000000000001 /* FocusModeView.swift */,
+				AAF100062F00000000000001 /* FastingView.swift */,
+				AAF100072F00000000000001 /* FastHistoryView.swift */,
+				AAF100082F00000000000001 /* FastingViewModel.swift */,
+				AAF100092F00000000000001 /* MeditationSettings.swift */,
+				AAF1000A2F00000000000001 /* MeditationSession.swift */,
+				AAF1000B2F00000000000001 /* StreaksState.swift */,
+				AAF1000C2F00000000000001 /* Fast.swift */,
+				AAF1000D2F00000000000001 /* StorageProtocol.swift */,
+				AAF1000E2F00000000000001 /* UDKeys.swift */,
+				AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */,
+				AAF100102F00000000000001 /* Haptics.swift */,
+				AAF100112F00000000000001 /* AudioPlayer.swift */,
+				AAF100122F00000000000001 /* TimeFormatter.swift */,
+				AAF100132F00000000000001 /* Sounds.swift */,
+				AAF100232F00000000000001 /* BreathingSetupView.swift */,
+				AAF100242F00000000000001 /* BreathingSessionView.swift */,
+				AAF100282F00000000000001 /* BreathingResultsView.swift */,
+				AAF100252F00000000000001 /* BreathingViewModel.swift */,
+				AAF100262F00000000000001 /* BreathingSettings.swift */,
+				AAF100272F00000000000001 /* BreathingRoundResult.swift */,
+				AAF1002A2F00000000000001 /* Theme.swift */,
+				AAF1002B2F00000000000001 /* Card.swift */,
+				AAF1002C2F00000000000001 /* ButtonStyles.swift */,
+				AAF100292F00000000000001 /* MeditationPlan.swift */,
+				AAF1002E2F00000000000001 /* RingProgress.swift */,
+				AAF1002D2F00000000000001 /* Appearance.swift */,
+				AAF200012F00000000000001 /* ProfileView.swift */,
+				AAF200022F00000000000001 /* ProfileViewModel.swift */,
+				AAF200032F00000000000001 /* UserProfile.swift */,
+				AAF100142F00000000000001 /* Assets.xcassets */,
+				AAF100202F00000000000001 /* MediFastAppTests.swift */,
+				AAF100212F00000000000001 /* TimeMathTests.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-			32F42D802E64C8230037024A /* Products */ = {
-				isa = PBXGroup;
+		32F42D762E64C8230037024A = {
+			isa = PBXGroup;
+			children = (
+				32F42D802E64C8230037024A /* Products */,
+				324AE29B2EAC1BAE00B76476 /* Recovered References */,
+			);
+			sourceTree = "<group>";
+		};
+		32F42D802E64C8230037024A /* Products */ = {
+			isa = PBXGroup;
 			children = (
 				32F42D7F2E64C8230037024A /* MediFastApp.app */,
 				32F42D8D2E64C8240037024A /* MediFastAppTests.xctest */,
@@ -168,7 +208,6 @@ objects = {
 			);
 			dependencies = (
 			);
-
 			name = MediFastApp;
 			packageProductDependencies = (
 			);
@@ -189,7 +228,6 @@ objects = {
 			dependencies = (
 				32F42D8F2E64C8240037024A /* PBXTargetDependency */,
 			);
-
 			name = MediFastAppTests;
 			packageProductDependencies = (
 			);
@@ -210,7 +248,6 @@ objects = {
 			dependencies = (
 				32F42D992E64C8240037024A /* PBXTargetDependency */,
 			);
-
 			name = MediFastAppUITests;
 			packageProductDependencies = (
 			);
@@ -226,7 +263,7 @@ objects = {
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					32F42D7E2E64C8230037024A = {
 						CreatedOnToolsVersion = 16.4;
@@ -240,59 +277,6 @@ objects = {
 						TestTargetID = 32F42D7E2E64C8230037024A;
 					};
 				};
-			};
-			AAG100012F00000000000001 /* AppClassic */ = {
-				isa = PBXGroup;
-				children = (
-					AAF100142F00000000000001 /* Assets.xcassets */,
-					AAF100012F00000000000001 /* MediFastAppApp.swift */,
-					AAF100022F00000000000001 /* RootTabView.swift */,
-					AAF100032F00000000000001 /* MeditationView.swift */,
-					AAF100042F00000000000001 /* MeditationViewModel.swift */,
-					AAF100052F00000000000001 /* FocusModeView.swift */,
-					AAF100062F00000000000001 /* FastingView.swift */,
-					AAF100072F00000000000001 /* FastHistoryView.swift */,
-					AAF100082F00000000000001 /* FastingViewModel.swift */,
-					AAF200012F00000000000001 /* ProfileView.swift */,
-					AAF200022F00000000000001 /* ProfileViewModel.swift */,
-					AAF100092F00000000000001 /* MeditationSettings.swift */,
-					AAF1000A2F00000000000001 /* MeditationSession.swift */,
-					AAF1000B2F00000000000001 /* StreaksState.swift */,
-					AAF1000C2F00000000000001 /* Fast.swift */,
-					AAF200032F00000000000001 /* UserProfile.swift */,
-					AAF1000D2F00000000000001 /* StorageProtocol.swift */,
-					AAF1000E2F00000000000001 /* UDKeys.swift */,
-					AAF1000F2F00000000000001 /* UserDefaultsStorage.swift */,
-					AAF100102F00000000000001 /* Haptics.swift */,
-					AAF100112F00000000000001 /* AudioPlayer.swift */,
-					AAF100122F00000000000001 /* TimeFormatter.swift */,
-                AAF100132F00000000000001 /* Sounds.swift */,
-                AAF1002A2F00000000000001 /* Theme.swift */,
-                AAF1002B2F00000000000001 /* Card.swift */,
-                AAF1002C2F00000000000001 /* ButtonStyles.swift */,
-                AAF1002D2F00000000000001 /* Appearance.swift */,
-                AAF1002E2F00000000000001 /* RingProgress.swift */,
-                AAF100232F00000000000001 /* BreathingSetupView.swift */,
-                AAF100242F00000000000001 /* BreathingSessionView.swift */,
-                AAF100282F00000000000001 /* BreathingResultsView.swift */,
-                AAF100252F00000000000001 /* BreathingViewModel.swift */,
-                AAF100262F00000000000001 /* BreathingSettings.swift */,
-                AAF100272F00000000000001 /* BreathingRoundResult.swift */,
-                AAF100292F00000000000001 /* MeditationPlan.swift */,
-            );
-				name = AppClassic;
-				path = MediFastApp/MediFastApp;
-				sourceTree = "<group>";
-			};
-			AAG100022F00000000000001 /* TestsClassic */ = {
-				isa = PBXGroup;
-				children = (
-					AAF100202F00000000000001 /* MediFastAppTests.swift */,
-					AAF100212F00000000000001 /* TimeMathTests.swift */,
-				);
-				name = TestsClassic;
-				path = MediFastAppTests;
-				sourceTree = "<group>";
 			};
 			buildConfigurationList = 32F42D7A2E64C8230037024A /* Build configuration list for PBXProject "MediFastApp" */;
 			developmentRegion = en;
@@ -363,23 +347,23 @@ objects = {
 				AAB100102F00000000000001 /* Haptics.swift in Sources */,
 				AAB100112F00000000000001 /* AudioPlayer.swift in Sources */,
 				AAB100122F00000000000001 /* TimeFormatter.swift in Sources */,
-                AAB100132F00000000000001 /* Sounds.swift in Sources */,
-                AAB100232F00000000000001 /* BreathingSetupView.swift in Sources */,
-                AAB100242F00000000000001 /* BreathingSessionView.swift in Sources */,
-                AAB100282F00000000000001 /* BreathingResultsView.swift in Sources */,
-                AAB100252F00000000000001 /* BreathingViewModel.swift in Sources */,
-                AAB100262F00000000000001 /* BreathingSettings.swift in Sources */,
-                AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */,
-                AAB1002A2F00000000000001 /* Theme.swift in Sources */,
-                AAB1002B2F00000000000001 /* Card.swift in Sources */,
-                AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */,
-                AAB100292F00000000000001 /* MeditationPlan.swift in Sources */,
-                AAB1002E2F00000000000001 /* RingProgress.swift in Sources */,
-                AAB1002D2F00000000000001 /* Appearance.swift in Sources */,
-                AAB200012F00000000000001 /* ProfileView.swift in Sources */,
-                AAB200022F00000000000001 /* ProfileViewModel.swift in Sources */,
-                AAB200032F00000000000001 /* UserProfile.swift in Sources */,
-            );
+				AAB100132F00000000000001 /* Sounds.swift in Sources */,
+				AAB100232F00000000000001 /* BreathingSetupView.swift in Sources */,
+				AAB100242F00000000000001 /* BreathingSessionView.swift in Sources */,
+				AAB100282F00000000000001 /* BreathingResultsView.swift in Sources */,
+				AAB100252F00000000000001 /* BreathingViewModel.swift in Sources */,
+				AAB100262F00000000000001 /* BreathingSettings.swift in Sources */,
+				AAB100272F00000000000001 /* BreathingRoundResult.swift in Sources */,
+				AAB1002A2F00000000000001 /* Theme.swift in Sources */,
+				AAB1002B2F00000000000001 /* Card.swift in Sources */,
+				AAB1002C2F00000000000001 /* ButtonStyles.swift in Sources */,
+				AAB100292F00000000000001 /* MeditationPlan.swift in Sources */,
+				AAB1002E2F00000000000001 /* RingProgress.swift in Sources */,
+				AAB1002D2F00000000000001 /* Appearance.swift in Sources */,
+				AAB200012F00000000000001 /* ProfileView.swift in Sources */,
+				AAB200022F00000000000001 /* ProfileViewModel.swift in Sources */,
+				AAB200032F00000000000001 /* UserProfile.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32F42D892E64C8240037024A /* Sources */ = {
@@ -448,6 +432,7 @@ objects = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -470,6 +455,7 @@ objects = {
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -509,6 +495,7 @@ objects = {
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -524,6 +511,7 @@ objects = {
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -534,9 +522,14 @@ objects = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MediFastApp/MediFastApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F69VG7VSU9;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -571,9 +564,14 @@ objects = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MediFastApp/MediFastApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = F69VG7VSU9;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -608,6 +606,7 @@ objects = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -630,6 +629,7 @@ objects = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -651,6 +651,7 @@ objects = {
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
@@ -672,6 +673,7 @@ objects = {
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
