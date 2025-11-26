@@ -17,7 +17,6 @@ final class MeditationViewModel: ObservableObject {
     @Published private(set) var currentIndex: Int = 0 // 0-based
     @Published private(set) var startAt: Date? = nil  // per-session
     @Published private(set) var elapsedInCurrent: TimeInterval = 0 // warmup or session seconds
-    private var nextMidpointTrigger: TimeInterval? = nil
     private var lastTickAt: Date? = nil
 
     // Derived helpers
@@ -45,10 +44,6 @@ final class MeditationViewModel: ObservableObject {
         default: return 0
         }
     }
-    private var midpointInterval: TimeInterval? {
-        guard let minutes = plan.midpointIntervalMinutes else { return nil }
-        return TimeInterval(max(1, minutes)) * 60
-    }
 
     // Storage (injected)
     private let storage: StorageProtocol
@@ -68,12 +63,11 @@ final class MeditationViewModel: ObservableObject {
     }
 
     // MARK: - Intents
-    func start(minutes: Int, warmupSeconds: Int?, midpointInterval: Int?) {
+    func start(minutes: Int, warmupSeconds: Int?) {
         // Backwards-compat entrypoint: create a one-session plan
         let plan = MeditationPlan(
             sessionsMinutes: [minutes],
-            warmupSeconds: warmupSeconds,
-            midpointIntervalMinutes: midpointInterval
+            warmupSeconds: warmupSeconds
         )
         try? storage.save(plan, forKey: UDKeys.meditationPlan)
         startPlan(plan)
@@ -84,7 +78,6 @@ final class MeditationViewModel: ObservableObject {
         try? storage.save(plan, forKey: UDKeys.meditationPlan)
         currentIndex = 0
         elapsedInCurrent = 0
-        nextMidpointTrigger = nil
         lastTickAt = nil
         if let w = plan.warmupSeconds, w > 0 {
             state = .warmup
@@ -98,7 +91,6 @@ final class MeditationViewModel: ObservableObject {
         state = .idle
         startAt = nil
         elapsedInCurrent = 0
-        nextMidpointTrigger = nil
         lastTickAt = nil
     }
 
@@ -151,7 +143,6 @@ final class MeditationViewModel: ObservableObject {
         state = .running
         startAt = startedAt
         lastTickAt = startedAt
-        configureMidpointTrigger()
         if playStartBell {
             Haptics.impact(.light)
             AudioPlayer.shared.play(named: Sounds.bellStart)
@@ -167,7 +158,6 @@ final class MeditationViewModel: ObservableObject {
             }
         case .running:
             elapsedInCurrent += 1
-            handleMidpointIfNeeded()
             if elapsedInCurrent >= sessionDuration {
                 endCurrentSessionAndAdvance(now: tickDate)
             }
@@ -183,7 +173,6 @@ final class MeditationViewModel: ObservableObject {
         persist(session: session)
         updateStreaks(for: end)
         Haptics.notify(.success)
-        nextMidpointTrigger = nil
 
         let next = currentIndex + 1
         if next < totalSessions {
@@ -194,30 +183,7 @@ final class MeditationViewModel: ObservableObject {
         } else {
             state = .completed
             AudioPlayer.shared.play(named: Sounds.bellEnd)
-            nextMidpointTrigger = nil
             lastTickAt = nil
-        }
-    }
-
-    private func configureMidpointTrigger() {
-        guard let interval = midpointInterval else {
-            nextMidpointTrigger = nil
-            return
-        }
-        nextMidpointTrigger = interval <= sessionDuration ? interval : nil
-    }
-
-    private func handleMidpointIfNeeded() {
-        guard state == .running,
-              nextMidpointTrigger != nil,
-              let interval = midpointInterval
-        else { return }
-        while let trigger = nextMidpointTrigger,
-              elapsedInCurrent >= trigger {
-            Haptics.impact(.medium)
-            AudioPlayer.shared.play(named: Sounds.bellMid)
-            let next = trigger + interval
-            nextMidpointTrigger = next <= sessionDuration ? next : nil
         }
     }
 

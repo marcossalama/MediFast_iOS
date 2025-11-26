@@ -1,6 +1,9 @@
 # MediFastApp AI Collaboration Guide
 
-This handbook sets the guardrails for AI-assisted development within the MediFast iOS project. It defines how agents research, plan, and execute tasks while preserving the app’s lightweight, offline-first philosophy. Treat every guideline here as additive to Xcode best practices and the project README.
+This handbook sets the guardrails for AI-assisted development within the MediFast iOS project. It defines how 
+
+agents research, plan, and execute tasks while preserving the app’s lightweight, offline-first philosophy. Treat every guideline here as additive to Xcode best practices and the project README.
+
 
 ## 1. Purpose & Scope
 - Support iterative improvements to the SwiftUI app without disrupting the team’s workflow.
