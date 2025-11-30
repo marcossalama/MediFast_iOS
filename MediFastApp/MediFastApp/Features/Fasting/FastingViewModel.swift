@@ -26,6 +26,11 @@ final class FastingViewModel: ObservableObject {
         guard let start = activeFast?.startAt else { return 0 }
         return max(0, now.timeIntervalSince(start))
     }
+    
+    /// Start time of the active fast. Returns nil if no active fast.
+    var activeStartTime: Date? {
+        activeFast?.startAt
+    }
 
     /// Last completed fast (most recent in history).
     var lastFast: Fast? { history.first }
@@ -142,6 +147,35 @@ final class FastingViewModel: ObservableObject {
     func removeFasts(at offsets: IndexSet) {
         let items = offsets.compactMap { $0 < history.count ? history[$0] : nil }
         items.forEach { deleteFast($0) }
+    }
+    
+    /// Updates the start time of the active fast by subtracting the specified hours and minutes from the current start time.
+    /// Validates that the new start time is not more than 24 hours in the past and not in the future.
+    func updateStartTime(byHours hours: Int, byMinutes minutes: Int) -> Bool {
+        guard var fast = activeFast else { return false }
+        let now = Date()
+        let calendar = Calendar.current
+        let currentStartTime = fast.startAt
+        
+        // Calculate the new start time by subtracting hours and minutes from the current start time
+        guard let newStartTime = calendar.date(byAdding: .hour, value: -hours, to: currentStartTime),
+              let adjustedStartTime = calendar.date(byAdding: .minute, value: -minutes, to: newStartTime) else {
+            return false
+        }
+        
+        // Validate: new start time must be <= now (not in future)
+        guard adjustedStartTime <= now else { return false }
+        
+        // Validate: new start time must not be more than 24 hours in the past from now
+        let maxPastTime = calendar.date(byAdding: .hour, value: -24, to: now) ?? Date.distantPast
+        guard adjustedStartTime >= maxPastTime else { return false }
+        
+        // Update the fast
+        fast.startAt = adjustedStartTime
+        activeFast = fast
+        persistActive()
+        Haptics.impact(.light)
+        return true
     }
 
     // MARK: - Persistence

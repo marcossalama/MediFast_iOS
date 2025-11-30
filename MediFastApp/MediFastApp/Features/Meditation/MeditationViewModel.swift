@@ -19,12 +19,24 @@ final class MeditationViewModel: ObservableObject {
     @Published private(set) var elapsedInCurrent: TimeInterval = 0 // warmup or session seconds
     private var lastTickAt: Date? = nil
 
+    // Stats
+    @Published private(set) var currentStreakDays: Int = 0
+    @Published private(set) var sessionsThisMonth: Int = 0
+    @Published private(set) var sessionsThisYear: Int = 0
+    @Published private(set) var totalMinutesMeditated: Double = 0
+    @Published private(set) var totalSessionsCount: Int = 0
+
     // Derived helpers
     var warmupSeconds: Int? { plan.warmupSeconds }
     var totalSessions: Int { max(1, plan.sessionsMinutes.count) }
     var currentSessionNumber: Int { min(currentIndex + 1, totalSessions) }
     var sessionMinutes: Int { plan.sessionsMinutes.indices.contains(currentIndex) ? plan.sessionsMinutes[currentIndex] : (plan.sessionsMinutes.last ?? 10) }
-    var sessionDuration: TimeInterval { TimeInterval(max(1, sessionMinutes)) * 60 }
+    private var isTestMode: Bool = false
+    var sessionDuration: TimeInterval {
+        let minutes = sessionMinutes
+        // In test mode, interpret minutes as seconds
+        return isTestMode ? TimeInterval(max(1, minutes)) : TimeInterval(max(1, minutes)) * 60
+    }
     var warmupDuration: TimeInterval { TimeInterval(warmupSeconds ?? 0) }
     var progress: Double {
         switch state {
@@ -60,6 +72,7 @@ final class MeditationViewModel: ObservableObject {
             self.selectedMinutes = legacy.presetMinutes
             try? storage.save(plan, forKey: UDKeys.meditationPlan)
         }
+        refreshStats()
     }
 
     // MARK: - Intents
@@ -73,8 +86,9 @@ final class MeditationViewModel: ObservableObject {
         startPlan(plan)
     }
 
-    func startPlan(_ plan: MeditationPlan) {
+    func startPlan(_ plan: MeditationPlan, isTestMode: Bool = false) {
         self.plan = plan
+        self.isTestMode = isTestMode
         try? storage.save(plan, forKey: UDKeys.meditationPlan)
         currentIndex = 0
         elapsedInCurrent = 0
@@ -174,11 +188,12 @@ final class MeditationViewModel: ObservableObject {
         updateStreaks(for: end)
         Haptics.notify(.success)
 
+        // Optional feedback after each session (including final)
+        if plan.vibrateAfterSession { Haptics.vibrate(duration: 3.0) }
+        if plan.dingAfterSession { AudioPlayer.shared.play(named: Sounds.bellMid) }
+
         let next = currentIndex + 1
         if next < totalSessions {
-            // Optional feedback after each session
-            if plan.vibrateAfterSession { Haptics.pulse(duration: 2.0, interval: 0.25, style: .rigid) }
-            if plan.dingAfterSession { AudioPlayer.shared.play(named: Sounds.bellMid) }
             beginSession(index: next, playStartBell: false, startedAt: end)
         } else {
             state = .completed
@@ -193,6 +208,7 @@ final class MeditationViewModel: ObservableObject {
         sessions.append(session)
         if sessions.count > 500 { sessions.removeFirst(sessions.count - 500) }
         try? storage.save(sessions, forKey: UDKeys.meditationSessions)
+        refreshStats()
     }
 
     private func updateStreaks(for endDate: Date) {
@@ -214,5 +230,43 @@ final class MeditationViewModel: ObservableObject {
         streaks.lastSessionDate = endDay
         streaks.bestStreak = max(streaks.bestStreak, streaks.currentStreak)
         try? storage.save(streaks, forKey: UDKeys.meditationStreaks)
+        refreshStats()
+    }
+
+    // MARK: - Stats
+    func refreshStats() {
+        let sessions = loadAllSessions()
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // Current streak
+        let streaks: StreaksState = (try? storage.load(StreaksState.self, forKey: UDKeys.meditationStreaks)) ?? StreaksState(lastSessionDate: nil, currentStreak: 0, bestStreak: 0)
+        currentStreakDays = streaks.currentStreak
+        
+        // Sessions this month
+        let currentMonth = calendar.component(.month, from: now)
+        let currentYear = calendar.component(.year, from: now)
+        sessionsThisMonth = sessions.filter { session in
+            let sessionMonth = calendar.component(.month, from: session.startAt)
+            let sessionYear = calendar.component(.year, from: session.startAt)
+            return sessionMonth == currentMonth && sessionYear == currentYear
+        }.count
+        
+        // Sessions this year
+        sessionsThisYear = sessions.filter { session in
+            let sessionYear = calendar.component(.year, from: session.startAt)
+            return sessionYear == currentYear
+        }.count
+        
+        // Total minutes meditated
+        let totalSeconds = sessions.reduce(0.0) { $0 + $1.duration }
+        totalMinutesMeditated = totalSeconds / 60.0
+        
+        // Total sessions count
+        totalSessionsCount = sessions.count
+    }
+    
+    private func loadAllSessions() -> [MeditationSession] {
+        (try? storage.load([MeditationSession].self, forKey: UDKeys.meditationSessions)) ?? []
     }
 }

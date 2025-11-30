@@ -26,17 +26,15 @@ struct MeditationPlan: Codable, Equatable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case sessionsMinutes, warmupSeconds, midpointIntervalMinutes, vibrateAfterSession, dingAfterSession
+        case sessionsMinutes, warmupSeconds, vibrateAfterSession, dingAfterSession
     }
 
-    // Backward-compatible decode: ignores midpointIntervalMinutes if present, default toggles to false if absent
+    // Backward-compatible decode: midpointIntervalMinutes in old data will be automatically ignored
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         let minutes = try c.decode([Int].self, forKey: .sessionsMinutes)
         self.sessionsMinutes = MeditationPlan.clamped(minutes)
         self.warmupSeconds = try? c.decode(Int.self, forKey: .warmupSeconds)
-        // Ignore midpointIntervalMinutes if present in old data
-        _ = try? c.decode(Int.self, forKey: .midpointIntervalMinutes)
         self.vibrateAfterSession = (try? c.decode(Bool.self, forKey: .vibrateAfterSession)) ?? false
         self.dingAfterSession = (try? c.decode(Bool.self, forKey: .dingAfterSession)) ?? false
     }

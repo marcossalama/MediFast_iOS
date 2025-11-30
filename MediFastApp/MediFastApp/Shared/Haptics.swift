@@ -38,6 +38,23 @@ enum Haptics {
         fire(0)
     }
 
+    /// Continuous standard iOS vibration for the specified duration.
+    /// Uses system vibration sound repeatedly at short intervals to create continuous feel.
+    static func vibrate(duration: TimeInterval) {
+        guard duration > 0 else { return }
+        #if canImport(UIKit)
+        let interval: TimeInterval = 0.1 // Short interval for continuous feel
+        let count = max(1, Int(ceil(duration / interval)))
+        func fire(_ i: Int) {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            if i + 1 < count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + interval) { fire(i + 1) }
+            }
+        }
+        fire(0)
+        #endif
+    }
+
     #if canImport(UIKit)
     private static func triggerVibrate(style: ImpactStyle) {
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
