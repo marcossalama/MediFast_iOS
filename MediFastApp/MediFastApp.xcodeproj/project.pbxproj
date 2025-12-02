@@ -12,6 +12,7 @@
 		AAB100032F00000000000001 /* MeditationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100032F00000000000001 /* MeditationView.swift */; };
 		AAB100042F00000000000001 /* MeditationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100042F00000000000001 /* MeditationViewModel.swift */; };
 		AAB100052F00000000000001 /* FocusModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100052F00000000000001 /* FocusModeView.swift */; };
+		AAB1002F2F00000000000001 /* MeditationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF1002F2F00000000000001 /* MeditationHistoryView.swift */; };
 		AAB100062F00000000000001 /* FastingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100062F00000000000001 /* FastingView.swift */; };
 		AAB100072F00000000000001 /* FastHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100072F00000000000001 /* FastHistoryView.swift */; };
 		AAB100082F00000000000001 /* FastingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF100082F00000000000001 /* FastingViewModel.swift */; };
@@ -72,6 +73,7 @@
 		AAF100032F00000000000001 /* MeditationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationView.swift; path = MediFastApp/Features/Meditation/MeditationView.swift; sourceTree = SOURCE_ROOT; };
 		AAF100042F00000000000001 /* MeditationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationViewModel.swift; path = MediFastApp/Features/Meditation/MeditationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		AAF100052F00000000000001 /* FocusModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FocusModeView.swift; path = MediFastApp/Features/Meditation/FocusModeView.swift; sourceTree = SOURCE_ROOT; };
+		AAF1002F2F00000000000001 /* MeditationHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeditationHistoryView.swift; path = MediFastApp/Features/Meditation/MeditationHistoryView.swift; sourceTree = SOURCE_ROOT; };
 		AAF100062F00000000000001 /* FastingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingView.swift; path = MediFastApp/Features/Fasting/FastingView.swift; sourceTree = SOURCE_ROOT; };
 		AAF100072F00000000000001 /* FastHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastHistoryView.swift; path = MediFastApp/Features/Fasting/FastHistoryView.swift; sourceTree = SOURCE_ROOT; };
 		AAF100082F00000000000001 /* FastingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastingViewModel.swift; path = MediFastApp/Features/Fasting/FastingViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -139,6 +141,7 @@
 				AAF100032F00000000000001 /* MeditationView.swift */,
 				AAF100042F00000000000001 /* MeditationViewModel.swift */,
 				AAF100052F00000000000001 /* FocusModeView.swift */,
+				AAF1002F2F00000000000001 /* MeditationHistoryView.swift */,
 				AAF100062F00000000000001 /* FastingView.swift */,
 				AAF100072F00000000000001 /* FastHistoryView.swift */,
 				AAF100082F00000000000001 /* FastingViewModel.swift */,
@@ -334,6 +337,7 @@
 				AAB100032F00000000000001 /* MeditationView.swift in Sources */,
 				AAB100042F00000000000001 /* MeditationViewModel.swift in Sources */,
 				AAB100052F00000000000001 /* FocusModeView.swift in Sources */,
+				AAB1002F2F00000000000001 /* MeditationHistoryView.swift in Sources */,
 				AAB100062F00000000000001 /* FastingView.swift in Sources */,
 				AAB100072F00000000000001 /* FastHistoryView.swift in Sources */,
 				AAB100082F00000000000001 /* FastingViewModel.swift in Sources */,
@@ -533,6 +537,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Medi Fast";
 				INFOPLIST_KEY_CFBundleIconName = AppIcon;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -548,7 +553,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcossalama.MediFastApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "MediFastApp 1";
@@ -580,6 +585,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Medi Fast";
 				INFOPLIST_KEY_CFBundleIconName = AppIcon;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -595,7 +601,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcossalama.MediFastApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "MediFastApp 1";

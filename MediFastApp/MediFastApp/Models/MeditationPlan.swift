@@ -7,17 +7,20 @@ struct MeditationPlan: Codable, Equatable {
     var warmupSeconds: Int?    // optional warm-up before the first session only
     var vibrateAfterSession: Bool // optional feedback toggle
     var dingAfterSession: Bool    // optional feedback toggle
+    var isTestMode: Bool          // test mode (interprets minutes as seconds)
 
     init(
         sessionsMinutes: [Int],
         warmupSeconds: Int?,
         vibrateAfterSession: Bool = false,
-        dingAfterSession: Bool = false
+        dingAfterSession: Bool = false,
+        isTestMode: Bool = false
     ) {
         self.sessionsMinutes = MeditationPlan.clamped(sessionsMinutes)
         self.warmupSeconds = warmupSeconds
         self.vibrateAfterSession = vibrateAfterSession
         self.dingAfterSession = dingAfterSession
+        self.isTestMode = isTestMode
     }
 
     static func clamped(_ values: [Int]) -> [Int] {
@@ -26,7 +29,7 @@ struct MeditationPlan: Codable, Equatable {
     }
     
     private enum CodingKeys: String, CodingKey {
-        case sessionsMinutes, warmupSeconds, vibrateAfterSession, dingAfterSession
+        case sessionsMinutes, warmupSeconds, vibrateAfterSession, dingAfterSession, isTestMode
     }
 
     // Backward-compatible decode: midpointIntervalMinutes in old data will be automatically ignored
@@ -37,5 +40,6 @@ struct MeditationPlan: Codable, Equatable {
         self.warmupSeconds = try? c.decode(Int.self, forKey: .warmupSeconds)
         self.vibrateAfterSession = (try? c.decode(Bool.self, forKey: .vibrateAfterSession)) ?? false
         self.dingAfterSession = (try? c.decode(Bool.self, forKey: .dingAfterSession)) ?? false
+        self.isTestMode = (try? c.decode(Bool.self, forKey: .isTestMode)) ?? false
     }
 }

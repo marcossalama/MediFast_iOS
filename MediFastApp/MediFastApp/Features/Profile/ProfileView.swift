@@ -8,7 +8,8 @@ struct ProfileView: View {
         ZStack {
             Theme.background.ignoresSafeArea()
             ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: 20) {
+                    activitySummaryCard.cardPadding()
                     summaryCard.cardPadding()
                     if viewModel.isEditing, let error = viewModel.errorMessage {
                         StatusBanner(
@@ -27,11 +28,16 @@ struct ProfileView: View {
                     }
                     termsCard.cardPadding()
                 }
-                .padding(.top, 24)
-                .padding(.bottom, 40)
+                .padding(.top, 8)
+                .padding(.horizontal, 0)
+                .padding(.bottom, 20)
             }
         }
         .navigationTitle("Profile")
+        .onAppear {
+            // Refresh activity stats when view appears
+            _ = viewModel.getActivityStats()
+        }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
@@ -62,9 +68,141 @@ struct ProfileView: View {
         }
     }
 
+    private var activitySummaryCard: some View {
+        let stats = viewModel.getActivityStats()
+        
+        return Card {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Activity Summary").sectionStyle()
+                
+                // Meditation Section
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "leaf.fill")
+                            .foregroundStyle(.green)
+                            .font(.headline)
+                        Text("Meditation")
+                            .font(.headline)
+                    }
+                    
+                    HStack(spacing: 16) {
+                        ActivityMetric(
+                            label: "Streak",
+                            value: "\(stats.meditationStreak)",
+                            unit: stats.meditationStreak == 1 ? "day" : "days",
+                            icon: "flame.fill",
+                            color: .orange
+                        )
+                        ActivityMetric(
+                            label: "Sessions",
+                            value: "\(stats.meditationTotalSessions)",
+                            unit: "",
+                            icon: "list.bullet",
+                            color: Theme.primary
+                        )
+                        ActivityMetric(
+                            label: "Total Time",
+                            value: formatMinutes(stats.meditationTotalMinutes),
+                            unit: "",
+                            icon: "clock.fill",
+                            color: Theme.primary
+                        )
+                    }
+                }
+                
+                Divider()
+                
+                // Breathing Section
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "wind")
+                            .foregroundStyle(.blue)
+                            .font(.headline)
+                        Text("Breathing")
+                            .font(.headline)
+                    }
+                    
+                    HStack(spacing: 16) {
+                        if let bestRetention = stats.breathingLatestBestRetention {
+                            ActivityMetric(
+                                label: "Best Retention",
+                                value: TimeFormatter.ms(bestRetention),
+                                unit: "",
+                                icon: "timer",
+                                color: Theme.primary
+                            )
+                        } else {
+                            ActivityMetric(
+                                label: "Best Retention",
+                                value: "—",
+                                unit: "",
+                                icon: "timer",
+                                color: Theme.primary
+                            )
+                        }
+                        ActivityMetric(
+                            label: "Latest Rounds",
+                            value: "\(stats.breathingLatestRounds)",
+                            unit: "",
+                            icon: "arrow.clockwise",
+                            color: Theme.primary
+                        )
+                    }
+                }
+                
+                Divider()
+                
+                // Fasting Section
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 8) {
+                        Image(systemName: "hourglass")
+                            .foregroundStyle(.purple)
+                            .font(.headline)
+                        Text("Fasting")
+                            .font(.headline)
+                    }
+                    
+                    HStack(spacing: 16) {
+                        ActivityMetric(
+                            label: "Streak",
+                            value: "\(stats.fastingStreak)",
+                            unit: stats.fastingStreak == 1 ? "day" : "days",
+                            icon: "flame.fill",
+                            color: .orange
+                        )
+                        ActivityMetric(
+                            label: "Total Fasts",
+                            value: "\(stats.fastingTotalFasts)",
+                            unit: "",
+                            icon: "list.bullet",
+                            color: Theme.primary
+                        )
+                        if let longestHours = stats.fastingLongestHours {
+                            ActivityMetric(
+                                label: "Longest",
+                                value: formatHours(longestHours),
+                                unit: "",
+                                icon: "clock.fill",
+                                color: Theme.primary
+                            )
+                        } else {
+                            ActivityMetric(
+                                label: "Longest",
+                                value: "—",
+                                unit: "",
+                                icon: "clock.fill",
+                                color: Theme.primary
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private var summaryCard: some View {
         Card {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 16) {
                 HStack(alignment: .top, spacing: 16) {
                     InitialsBadge(initials: viewModel.profile.initials)
                     VStack(alignment: .leading, spacing: viewModel.isEditing ? 12 : 4) {
@@ -394,6 +532,59 @@ private struct TermsLabelStyle: LabelStyle {
                 .foregroundStyle(.primary)
         }
     }
+}
+
+private struct ActivityMetric: View {
+    let label: String
+    let value: String
+    let unit: String
+    let icon: String
+    let color: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 4) {
+                Image(systemName: icon)
+                    .font(.caption)
+                    .foregroundStyle(color)
+                Text(label)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            HStack(alignment: .firstTextBaseline, spacing: 2) {
+                Text(value)
+                    .font(.subheadline.weight(.semibold))
+                if !unit.isEmpty {
+                    Text(unit)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private func formatMinutes(_ minutes: Double) -> String {
+    let totalMinutes = Int(minutes.rounded())
+    if totalMinutes >= 60 {
+        let hours = totalMinutes / 60
+        let remainingMinutes = totalMinutes % 60
+        if remainingMinutes == 0 {
+            return "\(hours)h"
+        }
+        return "\(hours)h \(remainingMinutes)m"
+    }
+    return "\(totalMinutes)m"
+}
+
+private func formatHours(_ hours: Double) -> String {
+    let totalHours = Int(hours.rounded())
+    let minutes = Int((hours - Double(totalHours)) * 60)
+    if minutes == 0 {
+        return "\(totalHours)h"
+    }
+    return "\(totalHours)h \(minutes)m"
 }
 
 #Preview {

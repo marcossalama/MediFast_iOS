@@ -56,25 +56,24 @@ struct BreathingSetupView: View {
                 }
                 .cardPadding()
 
-                Text("Breathing Pace").sectionStyle().cardPadding()
+                Text("Settings").sectionStyle().cardPadding()
                 Card {
-                    Picker("Pace", selection: $paceSeconds) {
-                        Text("Slow (4s)").tag(4)
-                        Text("Med (3s)").tag(3)
-                        Text("Fast (2s)").tag(2)
-                    }
-                    .pickerStyle(.segmented)
-                }
-                .cardPadding()
-
-                Text("Feedback").sectionStyle().cardPadding()
-                Card {
-                    Toggle(isOn: $vibrateAfterRound) {
-                        Label("Vibrate after round", systemImage: "waveform")
-                    }
-                    Divider()
-                    Toggle(isOn: $dingAfterRound) {
-                        Label("Ding after round", systemImage: "bell")
+                    VStack(alignment: .leading, spacing: 16) {
+                        Picker("Pace", selection: $paceSeconds) {
+                            Text("Slow (4s)").tag(4)
+                            Text("Med (3s)").tag(3)
+                            Text("Fast (2s)").tag(2)
+                        }
+                        .pickerStyle(.segmented)
+                        
+                        Divider()
+                        
+                        Toggle(isOn: $vibrateAfterRound) {
+                            Label("Vibrate after round", systemImage: "waveform")
+                        }
+                        Toggle(isOn: $dingAfterRound) {
+                            Label("Ding after round", systemImage: "bell")
+                        }
                     }
                 }
                 .cardPadding()

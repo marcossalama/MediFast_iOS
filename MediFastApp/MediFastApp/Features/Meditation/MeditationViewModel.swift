@@ -269,4 +269,87 @@ final class MeditationViewModel: ObservableObject {
     private func loadAllSessions() -> [MeditationSession] {
         (try? storage.load([MeditationSession].self, forKey: UDKeys.meditationSessions)) ?? []
     }
+    
+    // MARK: - Session Management
+    func getAllSessions() -> [MeditationSession] {
+        loadAllSessions()
+    }
+    
+    func deleteSession(_ session: MeditationSession) {
+        var sessions = loadAllSessions()
+        sessions.removeAll(where: { $0.id == session.id })
+        try? storage.save(sessions, forKey: UDKeys.meditationSessions)
+        recalculateStreaks(from: sessions)
+        refreshStats()
+    }
+    
+    private func recalculateStreaks(from sessions: [MeditationSession]) {
+        guard !sessions.isEmpty else {
+            let emptyStreaks = StreaksState(lastSessionDate: nil, currentStreak: 0, bestStreak: 0)
+            try? storage.save(emptyStreaks, forKey: UDKeys.meditationStreaks)
+            return
+        }
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let today = calendar.startOfDay(for: now)
+        
+        // Get unique days with sessions, sorted newest first
+        let sessionDays = Set(sessions.map { calendar.startOfDay(for: $0.startAt) })
+            .sorted(by: >)
+        
+        guard let mostRecentDay = sessionDays.first else {
+            let emptyStreaks = StreaksState(lastSessionDate: nil, currentStreak: 0, bestStreak: 0)
+            try? storage.save(emptyStreaks, forKey: UDKeys.meditationStreaks)
+            return
+        }
+        
+        // Calculate current streak: consecutive days from most recent backwards
+        // Only count if most recent session was today or yesterday (active streak)
+        var currentStreak = 0
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today) ?? today
+        
+        if calendar.isDate(mostRecentDay, inSameDayAs: today) || 
+           calendar.isDate(mostRecentDay, inSameDayAs: yesterday) {
+            currentStreak = 1
+            var checkDay = calendar.date(byAdding: .day, value: -1, to: mostRecentDay) ?? mostRecentDay
+            for day in sessionDays.dropFirst() {
+                if calendar.isDate(day, inSameDayAs: checkDay) {
+                    currentStreak += 1
+                    guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDay) else { break }
+                    checkDay = prev
+                } else {
+                    break
+                }
+            }
+        }
+        
+        // Calculate best streak: find longest consecutive sequence
+        var bestStreak = 1
+        var tempStreak = 1
+        var expectedDay = sessionDays.first!
+        
+        for day in sessionDays.dropFirst() {
+            guard let previousDay = calendar.date(byAdding: .day, value: -1, to: expectedDay) else {
+                expectedDay = day
+                tempStreak = 1
+                continue
+            }
+            
+            if calendar.isDate(day, inSameDayAs: previousDay) {
+                tempStreak += 1
+                bestStreak = max(bestStreak, tempStreak)
+            } else {
+                tempStreak = 1
+            }
+            expectedDay = day
+        }
+        
+        let streaks = StreaksState(
+            lastSessionDate: mostRecentDay,
+            currentStreak: currentStreak,
+            bestStreak: max(bestStreak, currentStreak)
+        )
+        try? storage.save(streaks, forKey: UDKeys.meditationStreaks)
+    }
 }

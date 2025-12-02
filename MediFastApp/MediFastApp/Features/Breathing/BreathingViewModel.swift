@@ -128,7 +128,7 @@ private extension BreathingViewModel {
         results.append(result)
         breathTickCounter = 0
         // Optional feedback on round transition
-        if settings.vibrateAfterRound { Haptics.impact(.medium) }
+        if settings.vibrateAfterRound { Haptics.vibrate(duration: 3.0) }
         if settings.dingAfterRound { AudioPlayer.shared.play(named: Sounds.bellMid) }
     }
 
@@ -146,7 +146,7 @@ private extension BreathingViewModel {
             phase = .completed
             recoveryRemaining = 0
             breathTickCounter = 0
-            Haptics.notify(.success)
+            // Note: Round feedback (vibrate+ding) was already played in startRecovery()
             persistHistory()
             // Final bell at the end of the full session
             AudioPlayer.shared.play(named: Sounds.bellEnd)

@@ -58,7 +58,7 @@ struct MeditationView: View {
                 }
                 .cardPadding()
 
-                Text("Cues & Feedback").sectionStyle().cardPadding()
+                Text("Settings").sectionStyle().cardPadding()
                 Card {
                     VStack(alignment: .leading, spacing: 16) {
                         Toggle(isOn: $testMode) {
@@ -144,6 +144,28 @@ struct MeditationView: View {
                             color: Theme.primary,
                             isFullWidth: true
                         )
+                        
+                        // Link to detailed history
+                        if viewModel.totalSessionsCount > 0 {
+                            Divider()
+                            NavigationLink {
+                                MeditationHistoryView(
+                                    items: viewModel.getAllSessions(),
+                                    onDelete: { session in
+                                        withAnimation {
+                                            viewModel.deleteSession(session)
+                                        }
+                                    }
+                                )
+                            } label: {
+                                HStack {
+                                    Text("See detailed history")
+                                    Spacer()
+                                    Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                                }
+                                .font(.subheadline.weight(.semibold))
+                            }
+                        }
                     }
                 }
                 .cardPadding()
@@ -164,9 +186,11 @@ struct MeditationView: View {
                 warmup = min(15, max(0, plan.warmupSeconds ?? 0))
                 vibrateAfterSession = plan.vibrateAfterSession
                 dingAfterSession = plan.dingAfterSession
+                testMode = plan.isTestMode
             } else {
                 rows = [SessionRow(id: UUID(), minutes: max(1, viewModel.selectedMinutes))]
                 warmup = min(15, max(0, viewModel.warmupSeconds ?? 0))
+                testMode = false
             }
             viewModel.refreshStats()
         }
@@ -182,7 +206,8 @@ struct MeditationView: View {
                         sessionsMinutes: rows.map { $0.minutes },
                         warmupSeconds: warmup == 0 ? nil : warmup,
                         vibrateAfterSession: vibrateAfterSession,
-                        dingAfterSession: dingAfterSession
+                        dingAfterSession: dingAfterSession,
+                        isTestMode: testMode
                     )
                     try? storage.save(plan, forKey: UDKeys.meditationPlan)
                     viewModel.startPlan(plan, isTestMode: testMode)

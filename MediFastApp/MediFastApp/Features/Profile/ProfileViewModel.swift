@@ -90,6 +90,84 @@ final class ProfileViewModel: ObservableObject {
         guard form.unitSystem != system else { return }
         form.updateUnitSystem(system)
     }
+    
+    // MARK: - Activity Stats
+    struct ActivityStats {
+        // Meditation
+        var meditationStreak: Int = 0
+        var meditationTotalSessions: Int = 0
+        var meditationTotalMinutes: Double = 0
+        
+        // Breathing
+        var breathingLatestBestRetention: TimeInterval? = nil
+        var breathingLatestRounds: Int = 0
+        
+        // Fasting
+        var fastingStreak: Int = 0
+        var fastingTotalFasts: Int = 0
+        var fastingLongestHours: Double? = nil
+    }
+    
+    func getActivityStats() -> ActivityStats {
+        let storage = self.storage
+        
+        // Meditation stats
+        let meditationSessions = (try? storage.load([MeditationSession].self, forKey: UDKeys.meditationSessions)) ?? []
+        let meditationStreaks = (try? storage.load(StreaksState.self, forKey: UDKeys.meditationStreaks)) ?? StreaksState(lastSessionDate: nil, currentStreak: 0, bestStreak: 0)
+        let meditationTotalSeconds = meditationSessions.reduce(0.0) { $0 + $1.duration }
+        
+        // Breathing stats (latest session only)
+        let breathingHistory = (try? storage.load([BreathingRoundResult].self, forKey: UDKeys.breathingHistory)) ?? []
+        let breathingBestRetention = breathingHistory.map { $0.retentionSeconds }.max()
+        let breathingRounds = breathingHistory.count
+        
+        // Fasting stats
+        let fastingHistory = (try? storage.load([Fast].self, forKey: UDKeys.fastingHistory)) ?? []
+        let fastingStreak = calculateFastingStreak(from: fastingHistory)
+        let fastingLongest = fastingHistory.max(by: { ($0.duration ?? 0) < ($1.duration ?? 0) })
+        let fastingLongestHours = fastingLongest?.duration.map { $0 / 3600.0 }
+        
+        return ActivityStats(
+            meditationStreak: meditationStreaks.currentStreak,
+            meditationTotalSessions: meditationSessions.count,
+            meditationTotalMinutes: meditationTotalSeconds / 60.0,
+            breathingLatestBestRetention: breathingBestRetention,
+            breathingLatestRounds: breathingRounds,
+            fastingStreak: fastingStreak,
+            fastingTotalFasts: fastingHistory.count,
+            fastingLongestHours: fastingLongestHours
+        )
+    }
+    
+    private func calculateFastingStreak(from history: [Fast]) -> Int {
+        guard !history.isEmpty else { return 0 }
+        let calendar = Calendar.current
+        var streak = 0
+        var lastDay: Date? = nil
+
+        for fast in history {
+            guard let end = fast.endAt else { continue }
+            let day = calendar.startOfDay(for: end)
+
+            if let prevDay = lastDay {
+                if calendar.isDate(day, inSameDayAs: prevDay) {
+                    continue
+                }
+                if let expected = calendar.date(byAdding: .day, value: -1, to: prevDay),
+                   calendar.isDate(day, inSameDayAs: expected) {
+                    streak += 1
+                    lastDay = day
+                } else {
+                    break
+                }
+            } else {
+                streak = 1
+                lastDay = day
+            }
+        }
+
+        return streak
+    }
 }
 
 // MARK: - Form Data
